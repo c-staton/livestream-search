@@ -1,0 +1,33 @@
+
+.stream-info h1 {
+    margin: 0px;
+}
+.stream-info p {
+    margin: 0;
+}
+
+.stream-info a {
+    color:black;
+    text-decoration: none;
+}
+
+.stream-info__title {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stream-info__data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.stream-info__data--creator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}

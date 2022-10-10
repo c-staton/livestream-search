@@ -1,0 +1,26 @@
+.streamer-profile a {
+    text-decoration: none;
+    color: black;
+}
+
+.streamer-profile__pfp {
+    border-radius: 100%;
+    border: 3px solid #f76c82;
+    width: 150px;
+}
+
+.streamer-profile__name {
+    font-size: 20px;
+    text-align: center;
+}
+
+.grow img{
+    transition: 1s ease;
+    }
+    
+    .grow img:hover{
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    transition: 1s ease;
+    }

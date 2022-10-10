@@ -1,0 +1,10 @@
+.stream-feed {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    gap: 20px 40px;
+    flex-wrap: wrap;
+    align-items:center;
+    justify-content:space-evenly;
+    margin: 50px 0px;
+}

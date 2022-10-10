@@ -1,0 +1,25 @@
+.highlight {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.highlight__title {
+    font-size: 70px;
+    white-space: pre-wrap;
+    width: 50%;
+}
+
+.highlight__embed iframe {
+    width: 480px;
+    height: 270px;
+    border: 3px solid #f76c82;
+}
+
+.highlight__embed {
+    width: 480px;
+}
+
+#live {
+    color: #f76c82;
+}

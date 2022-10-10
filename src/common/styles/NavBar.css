@@ -1,0 +1,134 @@
+.nav-bar {
+    background-color: black;
+    position: sticky;
+    width: 100%;
+    height: 64px;
+    top: 0;
+    margin: 0;
+    overflow: hidden;
+    z-index: 99;
+}
+
+.nav-bar__contents {
+    padding: 10px 0px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 150px;
+}
+
+.nav-bar-__logo--link {
+  display: flex;
+  align-items: center;
+}
+
+.nav-bar__logo {
+    width: 25%;
+}
+
+.nav-bar__logo #live-sym {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 1s linear;
+}
+
+.nav-bar__logo:hover #live-sym {
+  visibility: visible;
+  opacity: 1;
+}
+
+.nav-bar__links {
+    text-align: center;
+    width: 50%;
+}
+
+.nav-bar__random {
+    text-align: right;
+    width: 25%;
+}
+
+.nav-bar__logo span {
+    color: white;
+    font-weight: bold;
+}
+
+#nav-bar__logo--live {
+    color: #f76c82;
+}
+
+#nav-bar__logo--search {
+    font-weight: bold;
+    -webkit-transition: color 1s;
+    -moz-transition:    color 1s;
+    -ms-transition:     color 1s;
+    -o-transition:      color 1s;
+    transition:         color 1s;
+}
+
+.nav-bar__logo:hover #nav-bar__logo--search {
+  color: #f76c82;
+}
+
+.nav-bar a {
+    margin: 0px 20px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+.nav-bar__links a {
+  background-image: linear-gradient(
+    to right,
+    #f76c82,
+    #f76c82 50%,
+    #fff 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 5px 0;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-bar__links a:before{
+  content: '';
+  background: #f76c82;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-bar__links a:hover{
+ background-position: 0;
+}
+
+.nav-bar__links a:hover::before{
+  width: 100%;
+}
+
+.nav-bar__links a.active {
+    color: #f76c82;
+    font-weight: bold;
+    background-position: 0;
+}
+  
+  .nav-bar__random--img:hover {
+    /* Start the shake animation and make the animation last for 0.5 seconds */
+    animation: shake 1s;
+  
+    /* When the animation is finished, start again */
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    50% { transform: translate(-5px, 2px) rotate(-1deg); }
+    100% { transform: translate(1px, 1px) rotate(0deg); }
+  }
