@@ -15,7 +15,7 @@ const HighlightStream = ({ stream }) => {
 		streamEmbed = (
 			<iframe
 				title={stream.title}
-				src={`https://player.twitch.tv/?channel=${stream.channelId}&parent=localhost`}
+				src={`https://player.twitch.tv/?channel=${stream.channelId}&parent=${window.location.hostname}`}
 			></iframe>
 		);
 	}
