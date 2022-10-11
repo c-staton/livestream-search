@@ -47,15 +47,16 @@ const StreamSearch = ({ initial = "" }) => {
 		}
 	};
 
-	const compare = (a, b) => {
-		if (a.followerCount < b.followerCount) {
-			return 1;
-		}
-		if (a.followerCount > b.followerCount) {
-			return -1;
-		}
-		return 0;
-	};
+	// const compare = (a, b) => {
+	// 	if (a.followerCount < b.followerCount) {
+	// 		return 1;
+	// 	}
+	// 	if (a.followerCount > b.followerCount) {
+	// 		return -1;
+	// 	}
+	// 	return 0;
+	// };
+
 	let feed;
 	if (pathname === "/search") {
 		feed = <GameFeed games={gameList} />;
