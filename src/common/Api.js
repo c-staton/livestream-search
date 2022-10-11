@@ -1,12 +1,12 @@
 import axios from "axios";
-import {
-	TWITCH_LIVE_SEARCH,
-	TWITCH_VIEWS_SEARCH,
-	TWITCH_FOLLOWERS_SEARCH,
-	TWITCH_CATEGORY_FETCH,
-	TWITCH_AUTH,
-	TWITCH_CLIENT_ID,
-} from "./ApiKeys";
+
+const INVIDIOUS_BASE_URL = "https://vid.puffyan.us/api/v1";
+const TWITCH_LIVE_SEARCH = "https://api.twitch.tv/helix/search/channels";
+const TWITCH_VIEWS_SEARCH = "https://api.twitch.tv/helix/streams";
+const TWITCH_FOLLOWERS_SEARCH = "https://api.twitch.tv/helix/users/follows";
+const TWITCH_CATEGORY_FETCH = "https://api.twitch.tv/helix/games/top";
+const TWITCH_AUTH = process.env.REACT_APP_TWITCH_AUTH;
+const TWITCH_CLIENT_ID = process.env.REACT_APP_TWITCH_CLIENT_ID;
 
 class TwitchApi {
 	static async searchLives(searchTerm, needSubs = true) {
@@ -42,7 +42,7 @@ class TwitchApi {
 					data.map(async (vid) => {
 						return {
 							...vid,
-							followerCount: await this.getSubCount(vid.id),
+							followerCount: await this.getSubCount(vid.videoId),
 						};
 					})
 				);
@@ -166,10 +166,7 @@ class InvidiousApi {
 				},
 			};
 
-			const result = await axios.get(
-				"https://vid.puffyan.us/api/v1/search",
-				config
-			);
+			const result = await axios.get(`${INVIDIOUS_BASE_URL}/search`, config);
 			let data = result.data.map((vid) => {
 				return {
 					channelId: vid.authorId,
@@ -187,7 +184,7 @@ class InvidiousApi {
 					data.map(async (vid) => {
 						return {
 							...vid,
-							followerCount: await this.getSubCount(vid.authorId),
+							followerCount: await this.getSubCount(vid.channelId),
 						};
 					})
 				);
@@ -210,7 +207,7 @@ class InvidiousApi {
 				},
 			};
 			const result = await axios.get(
-				`https://vid.puffyan.us/api/v1/channels/${channelId}`,
+				`${INVIDIOUS_BASE_URL}/channels/${channelId}`,
 				config
 			);
 
@@ -235,7 +232,7 @@ class InvidiousApi {
 				},
 			};
 			const result = await axios.get(
-				`https://vid.puffyan.us/api/v1/channels/latest/${streamer.channelId}`,
+				`${INVIDIOUS_BASE_URL}/channels/latest/${streamer.channelId}`,
 				config
 			);
 

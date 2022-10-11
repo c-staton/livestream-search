@@ -10,6 +10,7 @@ import gameList from "./common/GameList";
 import "./App.css";
 
 function App() {
+	console.log(process.env.PUBLIC_URL);
 	return (
 		<div className="App">
 			<NavBar />
@@ -36,7 +37,7 @@ function App() {
 						}
 					/>
 				))}
-				<Route exact path="*" element={<Navigate to="/search" replace />} />
+				<Route exact path="*" element={<Navigate to="/" replace />} />
 			</Routes>
 		</div>
 	);

@@ -22,12 +22,12 @@ const StreamSearch = ({ heading, initial = "" }) => {
 	}, [initialSearch]);
 
 	const callYoutube = async (searchTerm) => {
-		let result = await InvidiousApi.searchLives(searchTerm);
+		let result = await InvidiousApi.searchLives(searchTerm, true);
 		return result;
 	};
 
 	const callTwitch = async (searchTerm) => {
-		let result = await TwitchApi.searchLives(searchTerm);
+		let result = await TwitchApi.searchLives(searchTerm, true);
 		return result;
 	};
 
