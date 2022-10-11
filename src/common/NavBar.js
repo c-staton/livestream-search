@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import Random from "./Random";
 import "./styles/NavBar.css";
 import diceIcon from "../icons/dice.png";
 import circle from "../icons/circle.png";
 
 const NavBar = () => {
+	const [randomStream, setRandomStream] = useState("");
+	const [clicks, setClicks] = useState(0);
+
+	useEffect(() => {
+		async function callRandom() {
+			const link = await Random.getStreamLink();
+			setRandomStream(link);
+		}
+		callRandom();
+	}, [clicks]);
+
 	return (
 		<nav className="nav-bar">
 			<div className="nav-bar__contents">
@@ -22,7 +34,12 @@ const NavBar = () => {
 					</NavLink>
 				</div>
 				<div className="nav-bar__random">
-					<a href="/random">
+					<a
+						href={randomStream}
+						target="_blank"
+						rel="noopener noreferrer"
+						onClick={() => setClicks(clicks + 1)}
+					>
 						<img
 							src={diceIcon}
 							alt="feeling lucky?"

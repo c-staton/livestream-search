@@ -200,7 +200,7 @@ class InvidiousApi {
 		try {
 			const config = {
 				params: {
-					first: "subCount",
+					fields: "subCount",
 				},
 				headers: {
 					Accept: "application/json",
@@ -210,7 +210,6 @@ class InvidiousApi {
 				`${INVIDIOUS_BASE_URL}/channels/${channelId}`,
 				config
 			);
-
 			const subCount = result.data.subCount;
 			return subCount;
 		} catch (err) {

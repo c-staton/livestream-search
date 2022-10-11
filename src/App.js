@@ -4,19 +4,16 @@ import StreamSearch from "./stream-search/StreamSearch";
 import TopStreamers from "./top-streamers/TopStreamers";
 import NavBar from "./common/NavBar";
 import HomePage from "./home/HomePage";
-import Random from "./random-stream/Random";
 import RequestForm from "./request/RequestForm";
 import gameList from "./common/GameList";
 import "./App.css";
 
 function App() {
-	console.log(process.env.PUBLIC_URL);
 	return (
 		<div className="App">
 			<NavBar />
 			<Routes>
 				<Route exact path="/" element={<HomePage />} />
-				<Route exact path="/random" element={<Random />} />
 				<Route exact path="/request" element={<RequestForm />} />
 				<Route
 					exact

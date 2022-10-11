@@ -35,7 +35,6 @@ const StreamSearch = ({ heading, initial = "" }) => {
 		const ytResults = await callYoutube(searchTerm);
 		const twitchResults = await callTwitch(searchTerm);
 		const allStreams = [...ytResults, ...twitchResults].sort(compare);
-		console.log(allStreams);
 		setStreams(allStreams);
 	};
 

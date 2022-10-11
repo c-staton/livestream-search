@@ -1,20 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import gameList from "./GameList";
+import Random from "./Random";
 import "./styles/SearchForm.css";
 import { useNavigate } from "react-router-dom";
 
 const SearchForm = ({ setInitial }) => {
 	const [searchTerm, setSearchTerm] = useState("");
-	let navigate = useNavigate();
+	const [randomStream, setRandomStream] = useState("");
+	const [clicks, setClicks] = useState(0);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		async function callRandom() {
+			const link = await Random.getStreamLink(searchTerm);
+			setRandomStream(link);
+		}
+		callRandom();
+	}, [clicks]);
+
+	const handleChange = async (e) => {
+		const link = await Random.getStreamLink(e.label);
+		setRandomStream(link);
+		setSearchTerm(e);
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setSearchTerm("");
 		navigate(`/search/${searchTerm.value}`);
 		if (setInitial) {
 			setInitial(searchTerm.label);
 		}
+		setSearchTerm("");
 	};
 
 	let styles = {
@@ -73,15 +90,20 @@ const SearchForm = ({ setInitial }) => {
 				name="term"
 				id="term"
 				options={gameList}
-				onChange={(op) => setSearchTerm(op)}
+				onChange={handleChange}
 				className="search-form__input"
-				value={searchTerm}
 				styles={styles}
 				placeholder="Select a catagory..."
 			/>
 			<div className="btns-wrapper">
 				<button className="search-btn">Livestream Search</button>
-				<a href="/random" className="search-btn">
+				<a
+					href={randomStream}
+					target="_blank"
+					rel="noopener noreferrer"
+					onClick={() => setClicks(clicks + 1)}
+					className="search-btn"
+				>
 					I'm Feeling Lucky
 				</a>
 			</div>
