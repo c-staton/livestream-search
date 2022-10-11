@@ -7,7 +7,7 @@ import GameFeed from "./GameFeed";
 import gameList from "../common/GameList";
 import "./styles/StreamSearch.css";
 
-const StreamSearch = ({ heading, initial = "" }) => {
+const StreamSearch = ({ initial = "" }) => {
 	const [streams, setStreams] = useState([]);
 	const [initialSearch, setInitialSearch] = useState(initial);
 
@@ -22,20 +22,29 @@ const StreamSearch = ({ heading, initial = "" }) => {
 	}, [initialSearch]);
 
 	const callYoutube = async (searchTerm) => {
-		let result = await InvidiousApi.searchLives(searchTerm, true);
+		let result = await InvidiousApi.searchLives(searchTerm, false);
 		return result;
 	};
 
 	const callTwitch = async (searchTerm) => {
-		let result = await TwitchApi.searchLives(searchTerm, true);
+		let result = await TwitchApi.searchLives(searchTerm, false);
 		return result;
 	};
 
 	const searchPlatforms = async (searchTerm) => {
 		const ytResults = await callYoutube(searchTerm);
 		const twitchResults = await callTwitch(searchTerm);
-		const allStreams = [...ytResults, ...twitchResults].sort(compare);
+		const allStreams = [...ytResults, ...twitchResults].sort(randomSort);
 		setStreams(allStreams);
+	};
+
+	const randomSort = (a, b) => {
+		const randomNum = Math.floor(Math.random() * 2); //random number, either 0 or 1
+		if (randomNum === 0) {
+			return 1;
+		} else {
+			return -1;
+		}
 	};
 
 	const compare = (a, b) => {
