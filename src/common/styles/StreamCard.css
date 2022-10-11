@@ -3,22 +3,47 @@
     margin-bottom: 10px;
 }
 
-.stream-card__img {
-    width: 480px;
-    height: 270px;
-}
-
 .thumbnail {
     border: 3px solid #f76c82;
+    width: 320px;
+    height: 180px;
 }
 
-.shrink img {
+.shrink div, .shrink img {
     transition: 1s ease;
     }
     
-    .shrink img:hover{
+    .shrink div:hover, .shrink img:hover{
     -webkit-transform: scale(0.95);
     -ms-transform: scale(0.95);
     transform: scale(0.95);
     transition: 1s ease;
     }
+
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.top-left {
+    text-shadow: -1px -1px 0 #f76c82, 1px -1px 0 #f76c82, -1px 1px 0 #f76c82, 1px 1px 0 #f76c82;
+    font-size: 20px;
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    height: 25px;
+    width: 100%;
+}
+
+.top-left a{
+    color: white;
+    text-decoration: none;
+}
+
+.stream-data {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+}

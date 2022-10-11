@@ -17,7 +17,7 @@ const HighlightStream = ({ stream }) => {
 					title={stream.title}
 					platform={stream.platform}
 					videoId={stream.videoId}
-					channelId={stream.hannelId}
+					channelId={stream.channelId}
 					creator={stream.channelName}
 					viewCount={stream.viewCount}
 				/>

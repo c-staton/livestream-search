@@ -7,6 +7,7 @@ const GameFeed = ({ games }) => {
 		<div className="game-feed">
 			{games.map((game) => (
 				<GameCard
+					key={game.value}
 					name={game.label}
 					slug={game.value}
 					thumbnail={game.thumbnail}

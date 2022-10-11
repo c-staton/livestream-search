@@ -3515,6 +3515,7 @@ const excludeList = [
 	"Twitch Plays",
 	"Netrunner",
 	"Pokémon Community Game",
+	"Darts",
 ];
 
 gameList = gameList.filter((game) => !excludeList.includes(game.label));

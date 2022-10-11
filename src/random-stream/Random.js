@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import gameList from "../common/GameList";
-import { TwitchApi, YTApi } from "../common/Api";
+import { TwitchApi, InvidiousApi } from "../common/Api";
 
 const Random = () => {
 	let navigate = useNavigate();
@@ -17,29 +17,32 @@ const Random = () => {
 	};
 
 	const searchPlatform = async () => {
-		// const platform = randomNum(0, 1) === 1 ? "youtube" : "twitch"; //50:50 odds for youtube or twitch
-		const platform = "twitch";
-		const randCategory = gameList[randomNum(0, gameList.length - 1)]; //Choose random category from GameList
-		let link;
+		try {
+			const platform = randomNum(0, 1) === 1 ? "youtube" : "twitch"; //50:50 odds for youtube or twitch
+			const randCategory = gameList[randomNum(0, gameList.length - 1)]; //Choose random category from GameList
+			let link;
 
-		if (platform === "youtube") {
-			const { videoId } = await getRandLive(
-				YTApi.searchLives,
-				randCategory.label
+			if (platform === "youtube") {
+				const { videoId } = await getRandLive(
+					InvidiousApi.searchLives,
+					randCategory.label
+				);
+				link = `https://www.youtube.com/watch?v=${videoId}`;
+			} else {
+				const { channelId } = await getRandLive(
+					TwitchApi.searchLives,
+					randCategory.label
+				);
+				link = `https://www.twitch.tv/${channelId}`;
+			}
+			window.open(
+				link,
+				"_blank" // open in a new window.
 			);
-			link = `https://www.youtube.com/watch?v=${videoId}`;
-		} else {
-			const { channelId } = await getRandLive(
-				TwitchApi.searchLives,
-				randCategory.label
-			);
-			link = `https://www.twitch.tv/${channelId}`;
+			navigate(-1); // return to previous page
+		} catch (err) {
+			console.log(err);
 		}
-		window.open(
-			link,
-			"_blank" // <- This is what makes it open in a new window.
-		);
-		navigate("/");
 	};
 
 	useEffect(() => {

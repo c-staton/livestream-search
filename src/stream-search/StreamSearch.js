@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { YTApi, TwitchApi } from "../common/Api";
+import { TwitchApi, InvidiousApi } from "../common/Api";
 import SearchForm from "../common/SearchForm";
 import StreamFeed from "../common/StreamFeed";
 import GameFeed from "./GameFeed";
@@ -22,7 +22,7 @@ const StreamSearch = ({ heading, initial = "" }) => {
 	}, [initialSearch]);
 
 	const callYoutube = async (searchTerm) => {
-		let result = await YTApi.searchLives(searchTerm);
+		let result = await InvidiousApi.searchLives(searchTerm);
 		return result;
 	};
 
@@ -35,14 +35,15 @@ const StreamSearch = ({ heading, initial = "" }) => {
 		const ytResults = await callYoutube(searchTerm);
 		const twitchResults = await callTwitch(searchTerm);
 		const allStreams = [...ytResults, ...twitchResults].sort(compare);
+		console.log(allStreams);
 		setStreams(allStreams);
 	};
 
 	const compare = (a, b) => {
-		if (a.viewCount < b.viewCount) {
+		if (a.followerCount < b.followerCount) {
 			return 1;
 		}
-		if (a.viewCount > b.viewCount) {
+		if (a.followerCount > b.followerCount) {
 			return -1;
 		}
 		return 0;
@@ -56,9 +57,13 @@ const StreamSearch = ({ heading, initial = "" }) => {
 
 	return (
 		<div className="stream-search">
-			<h1 className="stream-search__title">{heading}</h1>
-			<SearchForm setInitial={setInitialSearch} />
-			{feed}
+			<div className="stream-search__content">
+				<div className="stream-search__block">
+					<SearchForm setInitial={setInitialSearch} />
+				</div>
+
+				{feed}
+			</div>
 		</div>
 	);
 };

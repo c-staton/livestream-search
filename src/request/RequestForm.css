@@ -6,9 +6,68 @@
 
 .request__content {
     margin: 0px 150px;
-    padding: 30px;
+    min-height: calc(100vh - 64px);
     background-color: white;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.request__content h1 {
+    font-size: 70px;
+    margin: 0;
+    margin-top: 30px;
+}
+
+.request__form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f76c82;
+    gap: 30px;
+}
+
+.form__option {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.form__option input, .form__option select{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.submit {
+    display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.submit button{
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(247, 108, 130, 1);
+    
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    height: 40px;
+    padding: 0px 20px;
+    transition: 1s ease;
+    text-decoration: none;
+}
+
+.submit button:hover  { 
+
+    font-size: 16px;
+    cursor: pointer;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    transition: 1s ease;
 }
