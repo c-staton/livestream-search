@@ -4,7 +4,9 @@ import OfflineStreamers from "./OfflineStreamers";
 import streamersList from "./TopStreamersList";
 import HighlightStream from "./HighlightStream";
 import { TwitchApi, InvidiousApi } from "../common/Api";
+import loadingAnimation from "../common/Loading";
 import "./styles/TopStreamer.css";
+import "../common/styles/Loading.css";
 
 const TopStreamers = () => {
 	const [liveStreams, setLiveStreams] = useState([]);
@@ -52,8 +54,10 @@ const TopStreamers = () => {
 				}
 			}
 			const sortedLives = live.sort(randomSort);
+
 			if (sortedLives.length > 0) {
 				const highlight = sortedLives.shift();
+				console.log(highlight);
 				setHighlightStream([highlight]);
 			}
 			if (sortedLives.length > 0) {
@@ -64,26 +68,34 @@ const TopStreamers = () => {
 
 		verifiedStreamers(streamersList);
 	}, []);
-	return (
-		<div className="top-streamers">
-			<div className="top-streamers__content">
-				<div className="highlight-section">
-					{/* <h1 className="top-streamers__content--header">
-						Top Streamers Live Now
-					</h1> */}
-					{highlightStream.length > 0 ? (
-						<>
-							<HighlightStream stream={highlightStream[0]} />
-							<StreamFeed streams={liveStreams} />
-						</>
-					) : (
-						<p className="none-live">
-							No one's live{" "}
-							<span role="img" aria-label="dissapointed">
-								😕
-							</span>
-						</p>
-					)}
+
+	let highlightIsLive = (
+		<>
+			<HighlightStream stream={highlightStream[0]} />
+			<StreamFeed streams={liveStreams} />
+		</>
+	);
+
+	let highlightNotLive = (
+		<p className="none-live">
+			No one's live{" "}
+			<span role="img" aria-label="dissapointed">
+				😕
+			</span>
+		</p>
+	);
+
+	if (offlineStreamers.length === 0) {
+		return (
+			<div className="top-streamers">
+				<div className="top-streamers__content">{loadingAnimation}</div>
+			</div>
+		);
+	} else {
+		return (
+			<div className="top-streamers">
+				<div className="top-streamers__content">
+					{highlightStream.length > 0 ? highlightIsLive : highlightNotLive}
 					<div className="line"></div>
 					<h1 className="top-streamers__content--header">Offline Streamers</h1>
 					<OfflineStreamers streamers={offlineStreamers} />
@@ -94,8 +106,8 @@ const TopStreamers = () => {
 					</div>
 				</div>
 			</div>
-		</div>
-	);
+		);
+	}
 };
 
 export default TopStreamers;

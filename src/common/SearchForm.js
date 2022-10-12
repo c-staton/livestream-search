@@ -5,7 +5,7 @@ import Random from "./Random";
 import "./styles/SearchForm.css";
 import { useNavigate } from "react-router-dom";
 
-const SearchForm = ({ setInitial }) => {
+const SearchForm = ({ setInitial, resetState }) => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [randomStream, setRandomStream] = useState("");
 	const [clicks, setClicks] = useState(0);
@@ -13,7 +13,7 @@ const SearchForm = ({ setInitial }) => {
 
 	useEffect(() => {
 		async function callRandom() {
-			const link = await Random.getStreamLink(searchTerm);
+			const link = await Random.getStreamLink(searchTerm.label);
 			setRandomStream(link);
 		}
 		callRandom();
@@ -27,6 +27,9 @@ const SearchForm = ({ setInitial }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (resetState) {
+			resetState([]);
+		}
 		navigate(`/search/${searchTerm.value}`);
 		if (setInitial) {
 			setInitial(searchTerm.label);
@@ -84,6 +87,36 @@ const SearchForm = ({ setInitial }) => {
 		}),
 	};
 
+	const enabledBtns = (
+		<>
+			<button className="search-btn">Livestream Search</button>
+			<a
+				href={randomStream}
+				target="_blank"
+				rel="noopener noreferrer"
+				onClick={() => setClicks(clicks + 1)}
+				className="search-btn"
+			>
+				I'm Feeling Lucky
+			</a>
+		</>
+	);
+
+	const disabledBtns = (
+		<>
+			<button className="search-btn disabled">Livestream Search</button>
+			<a
+				href={randomStream}
+				target="_blank"
+				rel="noopener noreferrer"
+				onClick={() => setClicks(clicks + 1)}
+				className="search-btn disabled"
+			>
+				I'm Feeling Lucky
+			</a>
+		</>
+	);
+
 	return (
 		<form name="post" onSubmit={handleSubmit} className="search-form">
 			<Select
@@ -96,16 +129,7 @@ const SearchForm = ({ setInitial }) => {
 				placeholder="Select a catagory..."
 			/>
 			<div className="btns-wrapper">
-				<button className="search-btn">Livestream Search</button>
-				<a
-					href={randomStream}
-					target="_blank"
-					rel="noopener noreferrer"
-					onClick={() => setClicks(clicks + 1)}
-					className="search-btn"
-				>
-					I'm Feeling Lucky
-				</a>
+				{searchTerm !== "" ? enabledBtns : disabledBtns}
 			</div>
 		</form>
 	);

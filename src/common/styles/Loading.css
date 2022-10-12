@@ -1,0 +1,12 @@
+.loading-container iframe {
+    border: none;
+    pointer-events: none;
+    margin-bottom: 500px;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    min-height: calc(100vh);
+}
