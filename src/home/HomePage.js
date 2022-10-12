@@ -1,5 +1,6 @@
 import React from "react";
 import "./HomePage.css";
+import loadingAnimation from "../common/Loading";
 import SearchForm from "../common/SearchForm";
 
 const HomePage = () => {
@@ -16,6 +17,7 @@ const HomePage = () => {
 					<span id="platforms">platforms</span>*
 				</p>
 				<SearchForm />
+				<div style={{ display: "none" }}>{loadingAnimation}</div>
 			</div>
 		</div>
 	);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { TwitchApi, InvidiousApi } from "../common/Api";
+import { TwitchApi, YoutubeApi } from "../common/Api";
 import SearchForm from "../common/SearchForm";
 import StreamFeed from "../common/StreamFeed";
 import GameFeed from "./GameFeed";
@@ -23,7 +23,7 @@ const StreamSearch = ({ initial = "" }) => {
 	}, [initialSearch]);
 
 	const callYoutube = async (searchTerm) => {
-		let result = await InvidiousApi.searchLives(searchTerm, true);
+		let result = await YoutubeApi.searchLives(searchTerm, true);
 		return result;
 	};
 

@@ -3,7 +3,7 @@ import StreamFeed from "../common/StreamFeed";
 import OfflineStreamers from "./OfflineStreamers";
 import streamersList from "./TopStreamersList";
 import HighlightStream from "./HighlightStream";
-import { TwitchApi, InvidiousApi } from "../common/Api";
+import { TwitchApi, YoutubeApi } from "../common/Api";
 import loadingAnimation from "../common/Loading";
 import "./styles/TopStreamer.css";
 import "../common/styles/Loading.css";
@@ -37,7 +37,7 @@ const TopStreamers = () => {
 			const verifiedList = await Promise.all(
 				streamersList.map(async (streamer) => {
 					if (streamer.platform === "youtube") {
-						return await InvidiousApi.isLive(streamer);
+						return await YoutubeApi.isLive(streamer);
 					} else {
 						return await TwitchApi.isLive(streamer);
 					}

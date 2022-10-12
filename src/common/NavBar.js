@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import Random from "./Random";
 import "./styles/NavBar.css";
 import diceIcon from "../icons/dice.png";
-import circle from "../icons/circle.png";
+import search from "../icons/search.png";
 
 const NavBar = () => {
 	const [randomStream, setRandomStream] = useState("");
@@ -22,7 +22,7 @@ const NavBar = () => {
 			<div className="nav-bar__contents">
 				<div className="nav-bar__logo">
 					<a href="/" className="nav-bar-__logo--link">
-						<img src={circle} width="25px" id="live-sym" alt="" />
+						<img src={search} width="20px" id="live-sym" alt="" />
 						<span id="nav-bar__logo--live">Livestream</span>
 						<span id="nav-bar__logo--search">Search</span>
 					</a>

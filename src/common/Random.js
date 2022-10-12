@@ -1,5 +1,5 @@
 import gameList from "./GameList";
-import { TwitchApi, InvidiousApi } from "./Api";
+import { TwitchApi, YoutubeApi } from "./Api";
 
 class Random {
 	static randomNum(min, max) {
@@ -31,7 +31,7 @@ class Random {
 
 			if (platform === "youtube") {
 				const { videoId } = await this.getRandLive(
-					InvidiousApi.searchLives,
+					YoutubeApi.searchLives,
 					randCategory
 				);
 				link = `https://www.youtube.com/watch?v=${videoId}`;

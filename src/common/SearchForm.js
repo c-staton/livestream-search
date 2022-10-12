@@ -87,36 +87,6 @@ const SearchForm = ({ setInitial, resetState }) => {
 		}),
 	};
 
-	const enabledBtns = (
-		<>
-			<button className="search-btn">Livestream Search</button>
-			<a
-				href={randomStream}
-				target="_blank"
-				rel="noopener noreferrer"
-				onClick={() => setClicks(clicks + 1)}
-				className="search-btn"
-			>
-				I'm Feeling Lucky
-			</a>
-		</>
-	);
-
-	const disabledBtns = (
-		<>
-			<button className="search-btn disabled">Livestream Search</button>
-			<a
-				href={randomStream}
-				target="_blank"
-				rel="noopener noreferrer"
-				onClick={() => setClicks(clicks + 1)}
-				className="search-btn disabled"
-			>
-				I'm Feeling Lucky
-			</a>
-		</>
-	);
-
 	return (
 		<form name="post" onSubmit={handleSubmit} className="search-form">
 			<Select
@@ -129,7 +99,16 @@ const SearchForm = ({ setInitial, resetState }) => {
 				placeholder="Select a catagory..."
 			/>
 			<div className="btns-wrapper">
-				{searchTerm !== "" ? enabledBtns : disabledBtns}
+				<button className="search-btn">Livestream Search</button>
+				<a
+					href={randomStream}
+					target="_blank"
+					rel="noopener noreferrer"
+					onClick={() => setClicks(clicks + 1)}
+					className="search-btn"
+				>
+					I'm Feeling Lucky
+				</a>
 			</div>
 		</form>
 	);

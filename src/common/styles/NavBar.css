@@ -29,6 +29,7 @@
 
 .nav-bar__logo #live-sym {
   visibility: hidden;
+  margin-right: 5px;
   opacity: 0;
   transition: visibility 1s, opacity 1s linear;
 }

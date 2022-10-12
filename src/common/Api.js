@@ -151,7 +151,7 @@ class TwitchApi {
 	}
 }
 
-class InvidiousApi {
+class YoutubeApi {
 	static async searchLives(searchTerm, needSubs = true) {
 		try {
 			const config = {
@@ -172,7 +172,7 @@ class InvidiousApi {
 					channelId: vid.authorId,
 					channelName: vid.author,
 					platform: "youtube",
-					thumbnails: { url: vid.videoThumbnails[0].url },
+					thumbnails: { url: vid.videoThumbnails[4].url },
 					title: vid.title,
 					viewCount: 0,
 					videoId: vid.videoId,
@@ -262,4 +262,4 @@ class InvidiousApi {
 	}
 }
 
-export { TwitchApi, InvidiousApi };
+export { TwitchApi, YoutubeApi };
