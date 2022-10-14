@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import StreamSearch from "./stream-search/StreamSearch";
 import TopStreamers from "./top-streamers/TopStreamers";
@@ -7,8 +7,16 @@ import HomePage from "./home/HomePage";
 import RequestForm from "./request/RequestForm";
 import gameList from "./common/GameList";
 import "./App.css";
+import ReactGA from "react-ga";
+
+const TRACKING_ID = "UA-245661443-1"; // OUR_TRACKING_ID
+ReactGA.initialize(TRACKING_ID);
 
 function App() {
+	useEffect(() => {
+		ReactGA.pageview(window.location.pathname + window.location.search);
+	}, []);
+
 	return (
 		<div className="App">
 			<NavBar />

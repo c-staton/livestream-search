@@ -13,16 +13,20 @@ const SearchForm = ({ setInitial, resetState }) => {
 
 	useEffect(() => {
 		async function callRandom() {
-			const link = await Random.getStreamLink(searchTerm.label);
-			setRandomStream(link);
+			try {
+				const link = await Random.getStreamLink(searchTerm.label);
+				setRandomStream(link);
+			} catch (err) {}
 		}
 		callRandom();
 	}, [clicks]);
 
 	const handleChange = async (e) => {
-		const link = await Random.getStreamLink(e.label);
-		setRandomStream(link);
-		setSearchTerm(e);
+		try {
+			setSearchTerm(e);
+			const link = await Random.getStreamLink(e.label);
+			setRandomStream(link);
+		} catch (err) {}
 	};
 
 	const handleSubmit = (e) => {

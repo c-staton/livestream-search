@@ -34,36 +34,40 @@ const TopStreamers = () => {
 
 	useEffect(() => {
 		const verifiedStreamers = async (listOfStreamers) => {
-			const verifiedList = await Promise.all(
-				streamersList.map(async (streamer) => {
-					if (streamer.platform === "youtube") {
-						return await YoutubeApi.isLive(streamer);
+			try {
+				const verifiedList = await Promise.all(
+					streamersList.map(async (streamer) => {
+						if (streamer.platform === "youtube") {
+							return await YoutubeApi.isLive(streamer);
+						} else {
+							return await TwitchApi.isLive(streamer);
+						}
+					})
+				);
+				const live = [];
+				const notLive = [];
+
+				for (let streamer of verifiedList) {
+					if (streamer.videoId !== "") {
+						live.push(streamer);
 					} else {
-						return await TwitchApi.isLive(streamer);
+						notLive.push(streamer);
 					}
-				})
-			);
-			const live = [];
-			const notLive = [];
-
-			for (let streamer of verifiedList) {
-				if (streamer.videoId !== "") {
-					live.push(streamer);
-				} else {
-					notLive.push(streamer);
 				}
-			}
-			const sortedLives = live.sort(randomSort);
+				const sortedLives = live.sort(randomSort);
 
-			if (sortedLives.length > 0) {
-				const highlight = sortedLives.shift();
-				console.log(highlight);
-				setHighlightStream([highlight]);
+				if (sortedLives.length > 0) {
+					const highlight = sortedLives.shift();
+					console.log(highlight);
+					setHighlightStream([highlight]);
+				}
+				if (sortedLives.length > 0) {
+					setLiveStreams(sortedLives);
+				}
+				setOfflineStreamers(notLive.sort(sortByABC));
+			} catch (err) {
+				console.log(err);
 			}
-			if (sortedLives.length > 0) {
-				setLiveStreams(sortedLives);
-			}
-			setOfflineStreamers(notLive.sort(sortByABC));
 		};
 
 		verifiedStreamers(streamersList);

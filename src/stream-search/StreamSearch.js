@@ -23,13 +23,21 @@ const StreamSearch = ({ initial = "" }) => {
 	}, [initialSearch]);
 
 	const callYoutube = async (searchTerm) => {
-		let result = await YoutubeApi.searchLives(searchTerm, true);
-		return result;
+		try {
+			let result = await YoutubeApi.searchLives(searchTerm, true);
+			return result;
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const callTwitch = async (searchTerm) => {
-		let result = await TwitchApi.searchLives(searchTerm, true);
-		return result;
+		try {
+			let result = await TwitchApi.searchLives(searchTerm, true);
+			return result;
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const searchPlatforms = async (searchTerm) => {
@@ -83,6 +91,12 @@ const StreamSearch = ({ initial = "" }) => {
 			<div className="stream-search__content">
 				<div className="stream-search__block">
 					<SearchForm setInitial={setInitialSearch} resetState={setStreams} />
+				</div>
+
+				<div className="search-results">
+					<p>
+						Top {streams.length} {initialSearch} Livestreams:
+					</p>
 				</div>
 
 				{feed}

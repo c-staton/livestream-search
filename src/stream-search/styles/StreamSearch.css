@@ -29,3 +29,10 @@
     justify-content: center;
     align-items: center;
 }
+
+.search-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+}
