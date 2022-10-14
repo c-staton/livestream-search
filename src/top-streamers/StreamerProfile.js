@@ -1,7 +1,9 @@
 import React from "react";
+import useAnalyticsEventTracker from "../common/useAnalyticsEventTracker";
 import "./styles/StreamerProfile.css";
 
 const StreamerProfile = ({ data }) => {
+	const gaEventTracker = useAnalyticsEventTracker("Streamer Profile");
 	return (
 		<div className="streamer-profile">
 			<a
@@ -13,6 +15,7 @@ const StreamerProfile = ({ data }) => {
 						: `https://www.twitch.tv/${data.channelId}`
 				}
 				className="grow"
+				onClick={() => gaEventTracker(`Visit ${data.channelName} (offline)`)}
 			>
 				<img
 					src={data.profileImg}
@@ -30,6 +33,7 @@ const StreamerProfile = ({ data }) => {
 							? `https://www.youtube.com/channel/${data.channelId}`
 							: `https://www.twitch.tv/${data.channelId}`
 					}
+					onClick={() => gaEventTracker(`Visit ${data.channelName} (offline)`)}
 				>
 					{data.channelName}
 				</a>

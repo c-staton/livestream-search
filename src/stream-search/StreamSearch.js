@@ -93,12 +93,6 @@ const StreamSearch = ({ initial = "" }) => {
 					<SearchForm setInitial={setInitialSearch} resetState={setStreams} />
 				</div>
 
-				<div className="search-results">
-					<p>
-						Top {streams.length} {initialSearch} Livestreams:
-					</p>
-				</div>
-
 				{feed}
 			</div>
 		</div>

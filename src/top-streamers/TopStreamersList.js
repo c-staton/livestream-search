@@ -160,16 +160,6 @@ let streamersList = [
 		thumbnails: {},
 	},
 	{
-		channelName: "Heelmike",
-		profileImg:
-			"https://yt3.ggpht.com/ytc/AMLnZu84KRobS2gkL8IfKokzXL43mfsduUJFEbkFZrUzFg=s176-c-k-c0x00ffffff-no-rj",
-		platform: "twitch",
-		channelId: "heelmike",
-		videoId: "",
-		title: "",
-		thumbnails: {},
-	},
-	{
 		channelName: "tommyinnit",
 		profileImg:
 			"https://yt3.ggpht.com/ytc/AMLnZu9XpUqRE7xsTsD7n-yZylI2nT6KpwoWdIePyqMHhg=s176-c-k-c0x00ffffff-no-rj",

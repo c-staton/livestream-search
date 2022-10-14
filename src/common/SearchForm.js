@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 import Select from "react-select";
 import gameList from "./GameList";
 import Random from "./Random";
@@ -10,6 +11,7 @@ const SearchForm = ({ setInitial, resetState }) => {
 	const [randomStream, setRandomStream] = useState("");
 	const [clicks, setClicks] = useState(0);
 	const navigate = useNavigate();
+	const gaEventTracker = useAnalyticsEventTracker("Search Form");
 
 	useEffect(() => {
 		async function callRandom() {
@@ -103,12 +105,20 @@ const SearchForm = ({ setInitial, resetState }) => {
 				placeholder="Select a catagory..."
 			/>
 			<div className="btns-wrapper">
-				<button className="search-btn">Livestream Search</button>
+				<button
+					className="search-btn"
+					onClick={() => gaEventTracker("Livestream Search")}
+				>
+					Livestream Search
+				</button>
 				<a
 					href={randomStream}
 					target="_blank"
 					rel="noopener noreferrer"
-					onClick={() => setClicks(clicks + 1)}
+					onClick={() => {
+						setClicks(clicks + 1);
+						gaEventTracker(`Feeling Lucky (${searchTerm})`);
+					}}
 					className="search-btn"
 				>
 					I'm Feeling Lucky

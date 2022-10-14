@@ -1,5 +1,6 @@
 import React from "react";
 import StreamInfo from "./StreamInfo";
+import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 import "./styles/StreamCard.css";
 
 const StreamCard = ({
@@ -11,6 +12,7 @@ const StreamCard = ({
 	viewCount,
 	platform,
 }) => {
+	const gaEventTracker = useAnalyticsEventTracker("Livestream Card");
 	return (
 		<div className="stream-card">
 			<div className="shrink">
@@ -22,6 +24,7 @@ const StreamCard = ({
 							? `https://www.youtube.com/watch?v=${videoId}`
 							: `https://www.twitch.tv/${channelId}`
 					}
+					onClick={() => gaEventTracker(`Visit ${creator} (live)`)}
 				>
 					<img src={thumbnail.url} alt={title} className="thumbnail" />
 				</a>
