@@ -1,19 +1,14 @@
 import gameList from "./GameList";
-import { TwitchApi, YoutubeApi } from "./Api";
+import LSSearch from "./Api";
 
 class Random {
 	static randomNum(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	static async getRandLive(searchLives, randCategory) {
-		try {
-			let result = await searchLives(randCategory, false);
-			const randIdx = this.randomNum(0, result.length - 1);
-			return result[randIdx];
-		} catch (err) {
-			console.log(err);
-		}
+	static getRandElement(arr) {
+		const randIdx = this.randomNum(0, arr.length - 1);
+		return arr[randIdx];
 	}
 
 	static async getStreamLink(category = "") {
@@ -22,24 +17,19 @@ class Random {
 
 			let randCategory;
 			if (category === "") {
-				randCategory = gameList[this.randomNum(0, gameList.length - 1)].label; //Choose random category from GameList
+				randCategory = gameList[this.randomNum(0, gameList.length - 1)]; //Choose random category from GameList
 			} else {
 				randCategory = category;
 			}
 
 			let link;
-
 			if (platform === "youtube") {
-				const { videoId } = await this.getRandLive(
-					YoutubeApi.searchLives,
-					randCategory
-				);
-				link = `https://www.youtube.com/watch?v=${videoId}`;
+				const res = await LSSearch.getYtLiveIds(randCategory.label);
+				const streamId = this.getRandElement(res);
+				link = `https://www.youtube.com/watch?v=${streamId}`;
 			} else {
-				const { channelId } = await this.getRandLive(
-					TwitchApi.searchLives,
-					randCategory
-				);
+				const res = await LSSearch.searchTwitch(randCategory.twitchId);
+				const { channelId } = this.getRandElement(res);
 				link = `https://www.twitch.tv/${channelId}`;
 			}
 			return link;

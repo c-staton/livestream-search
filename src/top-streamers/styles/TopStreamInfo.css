@@ -17,6 +17,7 @@
 
 .topstream-info a {
     color:black;
+    text-decoration: none;
 }
 
 .topstream-info__title {

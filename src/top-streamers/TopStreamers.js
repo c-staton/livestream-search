@@ -5,7 +5,7 @@ import HighlightStream from "./HighlightStream";
 import loadingAnimation from "../common/Loading";
 import "./styles/TopStreamer.css";
 import "../common/styles/Loading.css";
-import LSSearch from "../common/Api2";
+import LSSearch from "../common/Api";
 
 const TopStreamers = () => {
 	const [liveStreams, setLiveStreams] = useState([]);

@@ -6,17 +6,19 @@ import Random from "./Random";
 import "./styles/SearchForm.css";
 import { useNavigate } from "react-router-dom";
 
-const SearchForm = ({ setInitial }) => {
-	const [searchTerm, setSearchTerm] = useState("");
+const SearchForm = ({ setInitial, defaultValue }) => {
+	const game = gameList.filter((game) => game.label === defaultValue);
+	const [searchTerm, setSearchTerm] = useState(game[0]);
 	const [randomStream, setRandomStream] = useState("");
 	const [clicks, setClicks] = useState(0);
+
 	const navigate = useNavigate();
 	const gaEventTracker = useAnalyticsEventTracker("Search Form");
 
 	useEffect(() => {
 		async function callRandom() {
 			try {
-				const link = await Random.getStreamLink(searchTerm.label);
+				const link = await Random.getStreamLink(searchTerm);
 				setRandomStream(link);
 			} catch (err) {}
 		}
@@ -26,7 +28,7 @@ const SearchForm = ({ setInitial }) => {
 	const handleChange = async (e) => {
 		try {
 			setSearchTerm(e);
-			const link = await Random.getStreamLink(e.label);
+			const link = await Random.getStreamLink(e);
 			setRandomStream(link);
 		} catch (err) {}
 	};
@@ -37,7 +39,6 @@ const SearchForm = ({ setInitial }) => {
 			setInitial(searchTerm.label);
 		}
 		navigate(`/search/${searchTerm.value}`);
-		setSearchTerm("");
 	};
 
 	let styles = {
@@ -95,11 +96,11 @@ const SearchForm = ({ setInitial }) => {
 			<Select
 				name="term"
 				id="term"
-				options={gameList}
 				onChange={handleChange}
 				className="search-form__input"
 				styles={styles}
-				placeholder="Select a catagory..."
+				placeholder={defaultValue || "Select a category..."}
+				options={gameList}
 			/>
 			<div className="btns-wrapper">
 				<button

@@ -8,7 +8,7 @@ const HighlightStream = ({ stream }) => {
 		streamEmbed = (
 			<iframe
 				title={stream.title}
-				src={`https://www.youtube.com/embed/${stream.videoId}?autoplay=1&mute=1&enablejsapi=1`}
+				src={`https://www.youtube.com/embed/${stream.streamId}?autoplay=1&mute=1&enablejsapi=1`}
 			></iframe>
 		);
 	} else {

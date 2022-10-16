@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import LSSearch from "../common/Api2";
+import LSSearch from "../common/Api";
 import SearchForm from "../common/SearchForm";
 import StreamFeed from "../common/StreamFeed";
 import GameFeed from "./GameFeed";
@@ -27,21 +27,32 @@ const StreamSearch = ({ initial = "" }) => {
 		setStreams(allStreams);
 	};
 
-	let feed;
-	if (pathname === "/search") {
-		feed = <GameFeed games={gameList} />;
-	} else {
-		feed = <StreamFeed streams={streams} />;
-	}
-
 	if (streams.length === 0 && pathname !== "/search") {
 		return (
 			<div className="stream-search">
 				<div className="stream-search__content">
 					<div className="stream-search__block">
-						<SearchForm setInitial={setInitialSearch} resetState={setStreams} />
+						<SearchForm
+							setInitial={setInitialSearch}
+							defaultValue={initialSearch}
+						/>
 					</div>
 					{loadingAnimation}
+				</div>
+			</div>
+		);
+	}
+	if (pathname === "/search") {
+		return (
+			<div className="stream-search">
+				<div className="stream-search__content">
+					<div className="stream-search__block">
+						<SearchForm
+							setInitial={setInitialSearch}
+							defaultValue={"Select a category..."}
+						/>
+					</div>
+					<GameFeed games={gameList} />
 				</div>
 			</div>
 		);
@@ -50,10 +61,12 @@ const StreamSearch = ({ initial = "" }) => {
 		<div className="stream-search">
 			<div className="stream-search__content">
 				<div className="stream-search__block">
-					<SearchForm setInitial={setInitialSearch} resetState={setStreams} />
+					<SearchForm
+						setInitial={setInitialSearch}
+						defaultValue={initialSearch}
+					/>
 				</div>
-
-				{feed}
+				<StreamFeed streams={streams} />
 			</div>
 		</div>
 	);
