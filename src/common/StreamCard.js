@@ -2,17 +2,40 @@ import React from "react";
 import StreamInfo from "./StreamInfo";
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 import "./styles/StreamCard.css";
+import TopStreamInfo from "../top-streamers/TopStreamInfo";
 
 const StreamCard = ({
-	title,
-	creator,
-	thumbnail,
-	videoId,
+	channelName,
 	channelId,
-	viewCount,
 	platform,
+	title,
+	streamId,
+	thumbnail,
+	viewers,
 }) => {
 	const gaEventTracker = useAnalyticsEventTracker("Livestream Card");
+
+	let streamInfo = (
+		<StreamInfo
+			channelName={channelName}
+			channelId={channelId}
+			platform={platform}
+			title={title}
+			streamId={streamId}
+			viewers={viewers}
+		/>
+	);
+
+	let topStreamInfo = (
+		<TopStreamInfo
+			channelName={channelName}
+			channelId={channelId}
+			platform={platform}
+			title={title}
+			streamId={streamId}
+		/>
+	);
+
 	return (
 		<div className="stream-card">
 			<div className="shrink">
@@ -21,22 +44,15 @@ const StreamCard = ({
 					rel="noopener noreferrer"
 					href={
 						platform === "youtube"
-							? `https://www.youtube.com/watch?v=${videoId}`
+							? `https://www.youtube.com/watch?v=${streamId}`
 							: `https://www.twitch.tv/${channelId}`
 					}
-					onClick={() => gaEventTracker(`Visit ${creator} (live)`)}
+					onClick={() => gaEventTracker(`Visit ${channelName} (live)`)}
 				>
-					<img src={thumbnail.url} alt={title} className="thumbnail" />
+					<img src={thumbnail} alt={title} className="thumbnail" />
 				</a>
 			</div>
-			<StreamInfo
-				title={title}
-				platform={platform}
-				videoId={videoId}
-				channelId={channelId}
-				creator={creator}
-				viewCount={viewCount}
-			/>
+			{viewers ? streamInfo : topStreamInfo}
 		</div>
 	);
 };

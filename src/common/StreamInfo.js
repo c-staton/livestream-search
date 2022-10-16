@@ -1,12 +1,35 @@
 import React from "react";
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
+import approximateNumber from "approximate-number";
 import "./styles/StreamInfo.css";
 import liveIcon from "../icons/live.png";
+import userIcon from "../icons/user.png";
 
-const StreamInfo = ({ title, platform, channelId, videoId, creator }) => {
+const StreamInfo = ({
+	channelName,
+	channelId,
+	platform,
+	title,
+	streamId,
+	viewers,
+}) => {
 	const gaEventTracker = useAnalyticsEventTracker("Livestream Card");
 	return (
 		<div className="stream-info">
+			<h1 className="stream-info__title">
+				<a
+					target="_blank"
+					rel="noopener noreferrer"
+					href={
+						platform === "youtube"
+							? `https://www.youtube.com/watch?v=${streamId}`
+							: `https://www.twitch.tv/${channelId}`
+					}
+					onClick={() => gaEventTracker(`Visit ${channelName} (live)`)}
+				>
+					{title}
+				</a>
+			</h1>
 			<div className="stream-info__data">
 				<div className="stream-info__data--creator">
 					<img src={liveIcon} alt="live" width="25px" />
@@ -19,27 +42,22 @@ const StreamInfo = ({ title, platform, channelId, videoId, creator }) => {
 									? `https://www.youtube.com/channel/${channelId}`
 									: `https://www.twitch.tv/${channelId}`
 							}
-							onClick={() => gaEventTracker(`Visit ${creator} (live)`)}
+							onClick={() => gaEventTracker(`Visit ${channelName} (live)`)}
 						>
-							{creator}
+							{channelName}
 						</a>
 					</p>
 				</div>
+				<div className="stream-info__data--creator">
+					<img
+						src={userIcon}
+						alt="view count"
+						width="14px"
+						className="viewer"
+					/>
+					<p>{approximateNumber(viewers)}</p>
+				</div>
 			</div>
-			<h1 className="stream-info__title">
-				<a
-					target="_blank"
-					rel="noopener noreferrer"
-					href={
-						platform === "youtube"
-							? `https://www.youtube.com/watch?v=${videoId}`
-							: `https://www.twitch.tv/${channelId}`
-					}
-					onClick={() => gaEventTracker(`Visit ${creator} (live)`)}
-				>
-					{title}
-				</a>
-			</h1>
 		</div>
 	);
 };

@@ -9,21 +9,23 @@ const RequestForm = () => {
 		setState(evt.target.value);
 	};
 
-	const handleSubmit = (evt) => {
-		evt.preventDefault();
-		alert(`Streamer: ${val} Platform: ${platform}`);
-	};
-
 	return (
 		<div className="request">
 			<div className="request__content">
 				<h1>Streamer Request</h1>
 				<h4>Request a streamer to be added to the Top Streamers list</h4>
-				<form className="request__form" onSubmit={handleSubmit}>
+				<form
+					name="request"
+					method="post"
+					data-netlify="true"
+					className="request__form"
+				>
+					<input type="hidden" name="form-name" value="request" />
 					<div className="form__option">
 						<label htmlFor="name">Channel Name:</label>
 						<input
 							name="name"
+							type="text"
 							value={val}
 							onChange={(e) => handleChange(e, setValue)}
 						/>
@@ -34,13 +36,14 @@ const RequestForm = () => {
 							name="platform"
 							id="platform"
 							onChange={(e) => handleChange(e, setPlatform)}
+							value={platform}
 						>
 							<option value="youtube">YouTube</option>
 							<option value="twitch">Twitch</option>
 						</select>
 					</div>
 					<div className="submit">
-						<button>Request</button>
+						<button type="submit">Request</button>
 					</div>
 				</form>
 			</div>

@@ -1,76 +1,35 @@
 import React, { useEffect, useState } from "react";
 import StreamFeed from "../common/StreamFeed";
 import OfflineStreamers from "./OfflineStreamers";
-import streamersList from "./TopStreamersList";
 import HighlightStream from "./HighlightStream";
-import { TwitchApi, YoutubeApi } from "../common/Api";
 import loadingAnimation from "../common/Loading";
 import "./styles/TopStreamer.css";
 import "../common/styles/Loading.css";
+import LSSearch from "../common/Api2";
 
 const TopStreamers = () => {
 	const [liveStreams, setLiveStreams] = useState([]);
 	const [highlightStream, setHighlightStream] = useState([]);
 	const [offlineStreamers, setOfflineStreamers] = useState([]);
 
-	const randomSort = (a, b) => {
-		const randomNum = Math.floor(Math.random() * 2); //random number, either 0 or 1
-		if (randomNum === 0) {
-			return 1;
-		} else {
-			return -1;
-		}
-	};
-
-	const sortByABC = (a, b) => {
-		if (a.channelName.toUpperCase() < b.channelName.toUpperCase()) {
-			return -1;
-		}
-		if (a.channelName > b.channelName) {
-			return 1;
-		}
-		return 0;
-	};
-
 	useEffect(() => {
-		const verifiedStreamers = async (listOfStreamers) => {
+		const verifiedStreamers = async () => {
 			try {
-				const verifiedList = await Promise.all(
-					streamersList.map(async (streamer) => {
-						if (streamer.platform === "youtube") {
-							return await YoutubeApi.isLive(streamer);
-						} else {
-							return await TwitchApi.isLive(streamer);
-						}
-					})
-				);
-				const live = [];
-				const notLive = [];
-
-				for (let streamer of verifiedList) {
-					if (streamer.videoId !== "") {
-						live.push(streamer);
-					} else {
-						notLive.push(streamer);
-					}
+				const result = await LSSearch.isTopLive();
+				if (result.highlight.length > 0) {
+					setHighlightStream(result.highlight);
 				}
-				const sortedLives = live.sort(randomSort);
-
-				if (sortedLives.length > 0) {
-					const highlight = sortedLives.shift();
-					console.log(highlight);
-					setHighlightStream([highlight]);
+				if (result.liveStreams.length > 0) {
+					setLiveStreams(result.liveStreams);
 				}
-				if (sortedLives.length > 0) {
-					setLiveStreams(sortedLives);
+				if (result.offline.length > 0) {
+					setOfflineStreamers(result.offline);
 				}
-				setOfflineStreamers(notLive.sort(sortByABC));
 			} catch (err) {
 				console.log(err);
 			}
 		};
-
-		verifiedStreamers(streamersList);
+		verifiedStreamers();
 	}, []);
 
 	let highlightIsLive = (

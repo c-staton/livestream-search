@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles/HighlightStream.css";
-import StreamInfo from "../common/StreamInfo";
+import TopStreamInfo from "./TopStreamInfo";
 
 const HighlightStream = ({ stream }) => {
 	let streamEmbed;
@@ -26,13 +26,12 @@ const HighlightStream = ({ stream }) => {
 			</h1>
 			<div className="highlight__embed">
 				{streamEmbed}
-				<StreamInfo
+				<TopStreamInfo
 					title={stream.title}
 					platform={stream.platform}
-					videoId={stream.videoId}
+					streamId={stream.streamId}
 					channelId={stream.channelId}
-					creator={stream.channelName}
-					viewCount={stream.viewCount}
+					channelName={stream.channelName}
 				/>
 			</div>
 		</div>

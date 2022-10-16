@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
 import StreamSearch from "./stream-search/StreamSearch";
 import TopStreamers from "./top-streamers/TopStreamers";
 import NavBar from "./common/NavBar";
@@ -19,31 +19,24 @@ function App() {
 
 	return (
 		<div className="App">
-			<NavBar />
-			<Routes>
-				<Route exact path="/" element={<HomePage />} />
-				<Route exact path="/request" element={<RequestForm />} />
-				<Route
-					exact
-					path="/search"
-					element={<StreamSearch heading={"Search by Category"} />}
-				/>
-				<Route exact path="/top-streamers" element={<TopStreamers />} />
-				{gameList.map((game) => (
-					<Route
-						key={game.value}
-						exact
-						path={"/search/" + game.value}
-						element={
-							<StreamSearch
-								heading={`Search by ${game.label}`}
-								initial={game.label}
-							/>
-						}
-					/>
-				))}
-				<Route exact path="*" element={<Navigate to="/" replace />} />
-			</Routes>
+			<BrowserRouter>
+				<NavBar />
+				<Routes>
+					<Route exact path="/" element={<HomePage />} />
+					<Route exact path="/request" element={<RequestForm />} />
+					<Route exact path="/search" element={<StreamSearch />} />
+					<Route exact path="/top-streamers" element={<TopStreamers />} />
+					{gameList.map((game) => (
+						<Route
+							key={game.value}
+							exact
+							path={"/search/" + game.value}
+							element={<StreamSearch initial={game.label} />}
+						/>
+					))}
+					<Route exact path="*" element={<Navigate to="/" replace />} />
+				</Routes>
+			</BrowserRouter>
 		</div>
 	);
 }

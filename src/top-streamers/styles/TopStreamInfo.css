@@ -1,0 +1,51 @@
+.topstream-info {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topstream-info h1 {
+    margin: 0px;
+}
+.topstream-info p {
+    margin: 0;
+}
+
+.topstream-info a {
+    color:black;
+}
+
+.topstream-info__title {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
+
+.topstream-info__data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.topstream-info__data--creator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    color: #f76c82;
+    font-size: 16px;
+}
+
+.topstream-info__data--creator a {
+    color: #f76c82;
+    text-decoration: none;
+    white-space: nowrap;
+}

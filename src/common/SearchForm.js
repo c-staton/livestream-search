@@ -6,7 +6,7 @@ import Random from "./Random";
 import "./styles/SearchForm.css";
 import { useNavigate } from "react-router-dom";
 
-const SearchForm = ({ setInitial, resetState }) => {
+const SearchForm = ({ setInitial }) => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [randomStream, setRandomStream] = useState("");
 	const [clicks, setClicks] = useState(0);
@@ -33,13 +33,10 @@ const SearchForm = ({ setInitial, resetState }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (resetState) {
-			resetState([]);
-		}
-		navigate(`/search/${searchTerm.value}`);
 		if (setInitial) {
 			setInitial(searchTerm.label);
 		}
+		navigate(`/search/${searchTerm.value}`);
 		setSearchTerm("");
 	};
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { TwitchApi, YoutubeApi } from "../common/Api";
+import LSSearch from "../common/Api2";
 import SearchForm from "../common/SearchForm";
 import StreamFeed from "../common/StreamFeed";
 import GameFeed from "./GameFeed";
@@ -22,49 +22,9 @@ const StreamSearch = ({ initial = "" }) => {
 		}
 	}, [initialSearch]);
 
-	const callYoutube = async (searchTerm) => {
-		try {
-			let result = await YoutubeApi.searchLives(searchTerm, true);
-			return result;
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const callTwitch = async (searchTerm) => {
-		try {
-			let result = await TwitchApi.searchLives(searchTerm, true);
-			return result;
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
 	const searchPlatforms = async (searchTerm) => {
-		const ytResults = await callYoutube(searchTerm);
-		const twitchResults = await callTwitch(searchTerm);
-		let allStreams = [...ytResults, ...twitchResults];
-		allStreams = allStreams.sort(compare);
+		const allStreams = await LSSearch.searchLives(searchTerm);
 		setStreams(allStreams);
-	};
-
-	// const randomSort = (a, b) => {
-	// 	const randomNum = Math.floor(Math.random() * 2); //random number, either 0 or 1
-	// 	if (randomNum === 0) {
-	// 		return 1;
-	// 	} else {
-	// 		return -1;
-	// 	}
-	// };
-
-	const compare = (a, b) => {
-		if (a.followerCount < b.followerCount) {
-			return 1;
-		}
-		if (a.followerCount > b.followerCount) {
-			return -1;
-		}
-		return 0;
 	};
 
 	let feed;

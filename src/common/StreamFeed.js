@@ -7,14 +7,14 @@ const StreamFeed = ({ streams }) => {
 		<div className="stream-feed">
 			{streams.map((vid) => (
 				<StreamCard
-					key={vid.videoId}
-					title={vid.title}
-					creator={vid.channelName}
-					thumbnail={vid.thumbnails}
-					videoId={vid.videoId}
+					key={vid.streamId}
+					channelName={vid.channelName}
 					channelId={vid.channelId}
-					viewCount={vid.viewCount}
 					platform={vid.platform}
+					title={vid.title}
+					streamId={vid.streamId}
+					thumbnail={vid.thumbnail}
+					viewers={vid.viewers}
 				/>
 			))}
 		</div>
