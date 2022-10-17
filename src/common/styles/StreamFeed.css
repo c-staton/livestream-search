@@ -6,5 +6,23 @@
     flex-wrap: wrap;
     align-items:center;
     justify-content:space-evenly;
-    margin: 50px 0px;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+.sort-by {
+    margin-right: auto;
+    margin-top: 30px;
+    
+}
+
+.sort-by label {
+    color: #f76c82;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.sort-by select {
+    font-weight: bold;
+    font-size: 18px;
 }

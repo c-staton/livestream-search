@@ -35,17 +35,8 @@ class LSSearch {
 		const game = gameList.filter((game) => game.label === searchTerm);
 		const ytStreams = await this.searchYoutube(searchTerm);
 		const twitchStreams = await this.searchTwitch(game[0].twitchId);
-		const sortByViews = (a, b) => {
-			if (a.viewers < b.viewers) {
-				return 1;
-			}
-			if (a.viewers > b.viewers) {
-				return -1;
-			}
-			return 0;
-		};
 		const allStreams = [...ytStreams, ...twitchStreams];
-		const sortedStreams = allStreams.sort(sortByViews);
+		const sortedStreams = allStreams.sort(this.viewersSort);
 		return sortedStreams;
 	}
 
@@ -183,23 +174,6 @@ class LSSearch {
 	}
 
 	static async isTopLive() {
-		const randomSort = (a, b) => {
-			const randomNum = Math.floor(Math.random() * 2);
-			if (randomNum === 0) {
-				return 1;
-			} else {
-				return -1;
-			}
-		};
-		const sortByABC = (a, b) => {
-			if (a.channelName.toUpperCase() < b.channelName.toUpperCase()) {
-				return -1;
-			}
-			if (a.channelName > b.channelName) {
-				return 1;
-			}
-			return 0;
-		};
 		const verifiedList = await Promise.all(
 			streamersList.map(async (streamer) => {
 				if (streamer.platform === "youtube") {
@@ -219,17 +193,46 @@ class LSSearch {
 				notLive.push(streamer);
 			}
 		}
-		const sortedLives = live.sort(randomSort);
+		const sortedLives = live.sort(this.randomSort);
 		if (sortedLives.length > 0) {
 			const highlight = sortedLives.shift();
 			highlightStream.push(highlight);
 		}
-		const sortedOffline = notLive.sort(sortByABC);
+		const sortedOffline = notLive.sort(this.alphabetSort);
 		return {
 			highlight: highlightStream,
 			liveStreams: sortedLives,
 			offline: sortedOffline,
 		};
+	}
+
+	static viewersSort(a, b) {
+		if (a.viewers < b.viewers) {
+			return 1;
+		}
+		if (a.viewers > b.viewers) {
+			return -1;
+		}
+		return 0;
+	}
+
+	static alphabetSort(a, b) {
+		if (a.channelName.toUpperCase() < b.channelName.toUpperCase()) {
+			return -1;
+		}
+		if (a.channelName > b.channelName) {
+			return 1;
+		}
+		return 0;
+	}
+
+	static randomSort(a, b) {
+		const randomNum = Math.floor(Math.random() * 2);
+		if (randomNum === 0) {
+			return 1;
+		} else {
+			return -1;
+		}
 	}
 }
 

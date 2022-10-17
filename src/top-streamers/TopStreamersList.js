@@ -249,6 +249,56 @@ let streamersList = [
 		title: "",
 		thumbnail: "",
 	},
+	{
+		channelName: "LilyPichu",
+		profileImg:
+			"https://yt3.ggpht.com/8oVg0I5TfCdWWMO6E-KPcdu6B1W4dpx_xa9X4GZibPlm6FB2aK9Foi953Ni_pETSlnJ7ZW_2ldc=s176-c-k-c0x00ffffff-no-rj",
+		platform: "youtube",
+		channelId: "UCvWU1K29wCZ8j1NsXsRrKnA",
+		streamId: "",
+		title: "",
+		thumbnail: "",
+	},
+	{
+		channelName: "willneff",
+		profileImg:
+			"https://static-cdn.jtvnw.net/jtv_user_pictures/0526935c-5783-4590-8dc1-16445842633d-profile_image-300x300.png",
+		platform: "twitch",
+		channelId: "willneff",
+		streamId: "",
+		title: "",
+		thumbnail: "",
+	},
+	{
+		channelName: "TenZ",
+		profileImg:
+			"https://static-cdn.jtvnw.net/jtv_user_pictures/17a3e618-d192-4870-82e5-b55082289a2e-profile_image-300x300.png",
+		platform: "twitch",
+		channelId: "tenz",
+		streamId: "",
+		title: "",
+		thumbnail: "",
+	},
+	{
+		channelName: "QuarterJade",
+		profileImg:
+			"https://static-cdn.jtvnw.net/jtv_user_pictures/5e2cc314-fc7a-4af7-a8de-71cdb3edf9e9-profile_image-300x300.png",
+		platform: "twitch",
+		channelId: "quarterjade",
+		streamId: "",
+		title: "",
+		thumbnail: "",
+	},
+	{
+		channelName: "pokelawls",
+		profileImg:
+			"https://static-cdn.jtvnw.net/jtv_user_pictures/aa68742d-ae1f-4fb7-9d0c-e1756d5204b0-profile_image-300x300.jpg",
+		platform: "twitch",
+		channelId: "pokelawls",
+		streamId: "",
+		title: "",
+		thumbnail: "",
+	},
 ];
 
 export default streamersList;

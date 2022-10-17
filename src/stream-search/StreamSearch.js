@@ -11,6 +11,7 @@ import loadingAnimation from "../common/Loading";
 const StreamSearch = ({ initial = "" }) => {
 	const [streams, setStreams] = useState([]);
 	const [initialSearch, setInitialSearch] = useState(initial);
+	const [sortBy, setSortBy] = useState("viewers");
 
 	const location = useLocation();
 	const pathname = location.pathname;
@@ -25,6 +26,7 @@ const StreamSearch = ({ initial = "" }) => {
 	const searchPlatforms = async (searchTerm) => {
 		const allStreams = await LSSearch.searchLives(searchTerm);
 		setStreams(allStreams);
+		setSortBy("viewers");
 	};
 
 	if (streams.length === 0 && pathname !== "/search") {
@@ -66,7 +68,7 @@ const StreamSearch = ({ initial = "" }) => {
 						defaultValue={initialSearch}
 					/>
 				</div>
-				<StreamFeed streams={streams} />
+				<StreamFeed streams={streams} sortBy={sortBy} setSortBy={setSortBy} />
 			</div>
 		</div>
 	);

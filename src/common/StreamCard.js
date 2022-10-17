@@ -52,7 +52,7 @@ const StreamCard = ({
 					<img src={thumbnail} alt={title} className="thumbnail" />
 				</a>
 			</div>
-			{viewers ? streamInfo : topStreamInfo}
+			{viewers >= 0 ? streamInfo : topStreamInfo}
 		</div>
 	);
 };
