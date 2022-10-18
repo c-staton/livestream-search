@@ -51,7 +51,9 @@ const TopStreamers = () => {
 	if (offlineStreamers.length === 0) {
 		return (
 			<div className="top-streamers">
-				<div className="top-streamers__content">{LoadingAnimation}</div>
+				<div className="top-streamers__content">
+					<LoadingAnimation />
+				</div>
 			</div>
 		);
 	} else {

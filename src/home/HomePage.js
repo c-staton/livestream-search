@@ -17,7 +17,9 @@ const HomePage = () => {
 					<span id="platforms">platforms</span>*
 				</p>
 				<SearchForm />
-				<div style={{ display: "none" }}>{LoadingAnimation}</div>
+				<div style={{ display: "none" }}>
+					<LoadingAnimation />
+				</div>
 			</div>
 		</div>
 	);

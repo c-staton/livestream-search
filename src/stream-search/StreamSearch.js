@@ -39,7 +39,7 @@ const StreamSearch = ({ initial = "" }) => {
 							defaultValue={initialSearch}
 						/>
 					</div>
-					{LoadingAnimation}
+					<LoadingAnimation />
 				</div>
 			</div>
 		);
