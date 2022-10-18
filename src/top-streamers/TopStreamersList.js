@@ -10,21 +10,21 @@ let streamersList = [
 		thumbnail: "",
 	},
 	{
-		channelName: "AdinRoss",
-		profileImg:
-			"https://static-cdn.jtvnw.net/jtv_user_pictures/10c197cb-295f-4d40-8a6c-26a0a5da22ee-profile_image-300x300.png",
-		platform: "twitch",
-		channelId: "adinross",
-		streamId: "",
-		title: "",
-		thumbnail: "",
-	},
-	{
 		channelName: "Myth",
 		profileImg:
 			"https://yt3.ggpht.com/ytc/AMLnZu_aIld4Z2v-Ek73KLoUExrVcNECqPIJLFiXjjItFA=s176-c-k-c0x00ffffff-no-rj",
 		platform: "youtube",
 		channelId: "UCvQczq3aHiHRBGEx-BKdrcg",
+		streamId: "",
+		title: "",
+		thumbnail: "",
+	},
+	{
+		channelName: "AdinRoss",
+		profileImg:
+			"https://static-cdn.jtvnw.net/jtv_user_pictures/10c197cb-295f-4d40-8a6c-26a0a5da22ee-profile_image-300x300.png",
+		platform: "twitch",
+		channelId: "adinross",
 		streamId: "",
 		title: "",
 		thumbnail: "",
@@ -295,6 +295,16 @@ let streamersList = [
 			"https://static-cdn.jtvnw.net/jtv_user_pictures/aa68742d-ae1f-4fb7-9d0c-e1756d5204b0-profile_image-300x300.jpg",
 		platform: "twitch",
 		channelId: "pokelawls",
+		streamId: "",
+		title: "",
+		thumbnail: "",
+	},
+	{
+		channelName: "IShowSpeed",
+		profileImg:
+			"https://yt3.ggpht.com/ytc/AMLnZu-IlP9V-RE0xCg2VbOfPZKcP9s2xqlU3VNtbuoXDA=s176-c-k-c0x00ffffff-no-rj",
+		platform: "youtube",
+		channelId: "UCWsDFcIhY2DBi3GB5uykGXA",
 		streamId: "",
 		title: "",
 		thumbnail: "",

@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Livestream Search
+An application used to search for livestreams from both Twitch and YouTube, built with React, JavaScript, and CSS.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Live link:
 
-## Available Scripts
+Access the live site at [livestreamsearch.com](https://www.livestreamsearch.com)
 
-In the project directory, you can run:
 
-### `npm start`
+## Screenshots
+<p float="left">
+  <img width="300" alt="homepage" src="https://user-images.githubusercontent.com/105070147/196249583-07e521da-d97a-4425-85ad-b386583f5289.png">
+  
+  <img width="300" alt="stream-categories" src="https://user-images.githubusercontent.com/105070147/196249580-e549bafd-19b4-48dd-b9da-f8649271b650.png">
+ 
+</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<p float="left">
+  <img width="300" alt="stream-search" src="https://user-images.githubusercontent.com/105070147/196249578-8c098530-4155-4e27-8807-b1beadb90604.png"> 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<img width="300" alt="live-top-streamers" src="https://user-images.githubusercontent.com/105070147/196249574-f0b5b53e-b942-4b1a-af72-6f288e12d9ba.png">
+</p>
 
-### `npm test`
+## About the App
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Livestream Search is an app that will search across Twitch and Youtube for relevant livestreams based on a given category. Having streams from both major streaming platforms eliminates the need to search for streamers exclusive to a particular site. As a streamer this also alleviates the worry of discoverability for the specific platform you chose to stream on. Instead streamers can focus on the content rather than the site they are on, and viewers can browse all streams from either platform all in one place.
 
-### `npm run build`
+Livestream Search also features a top streamers page, that consolidates some of the biggest and most-watched streamers all on one page. Many top streamers change the platform they stream on when their contract ends and they seek for the best deal they can sign. This causes the streamers fanbase to slightly change as many viewers won't move platforms with the streamer and end up missing their new streams. Now users are able to see all the top streamers in one place without the platform being a factor in their choice of who to watch.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Set Up
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To run Livestream Search locally follow these steps: 
+ 
+* download or clone the repository
+* run `npm install`
+* follow the [Twitch API docs](https://dev.twitch.tv/docs/api/get-started) to get your Twitch Client ID and OAuth token 
+* follow the [YouTube API docs](https://developers.google.com/youtube/v3/getting-started) to get your YouTube API key
+* create .env variables:
+	* `REACT_APP_TWITCH_CLIENT_ID = {your_twitch_client_id}` 
+	* `REACT_APP_TWITCH_AUTH = {your_twitch_oauth_token}`
+	* `REACT_APP_YT_API = {your_yt_api_key}`
+* run `npm start`

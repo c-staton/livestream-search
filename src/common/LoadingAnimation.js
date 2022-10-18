@@ -1,5 +1,5 @@
 import React from "react";
-const loadingAnimation = (
+const LoadingAnimation = () => (
 	<div className="loading-container">
 		<iframe
 			title="loading-animation"
@@ -8,4 +8,4 @@ const loadingAnimation = (
 	</div>
 );
 
-export default loadingAnimation;
+export default LoadingAnimation;

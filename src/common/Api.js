@@ -11,7 +11,7 @@ const twitchHeaders = {
 };
 
 const YOUTUBE_STREAM_SEARCH = "https://www.googleapis.com/youtube/v3/videos";
-const INVIDIOUS_BASE_URL = "https://vid.puffyan.us/api/v1";
+const YOUTUBE_IDS_URL = "https://vid.puffyan.us/api/v1";
 const YT_API_KEY = process.env.REACT_APP_YT_API;
 const youtubeHeaders = {
 	Accept: "application/json",
@@ -81,7 +81,7 @@ class LSSearch {
 		const result = await this.apiCall(
 			params,
 			youtubeHeaders,
-			`${INVIDIOUS_BASE_URL}/search`
+			`${YOUTUBE_IDS_URL}/search`
 		);
 		const videoIds = result.data.map((obj) => obj.videoId);
 		return videoIds;
@@ -150,7 +150,7 @@ class LSSearch {
 		const result = await this.apiCall(
 			params,
 			youtubeHeaders,
-			`${INVIDIOUS_BASE_URL}/channels/latest/${streamer.channelId}`
+			`${YOUTUBE_IDS_URL}/channels/latest/${streamer.channelId}`
 		);
 		const data = result.data;
 		if (data.length < 1) {

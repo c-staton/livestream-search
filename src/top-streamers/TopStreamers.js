@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import StreamFeed from "../common/StreamFeed";
 import OfflineStreamers from "./OfflineStreamers";
 import HighlightStream from "./HighlightStream";
-import loadingAnimation from "../common/Loading";
+import LoadingAnimation from "../common/LoadingAnimation";
 import "./styles/TopStreamer.css";
 import "../common/styles/Loading.css";
 import LSSearch from "../common/Api";
@@ -51,7 +51,7 @@ const TopStreamers = () => {
 	if (offlineStreamers.length === 0) {
 		return (
 			<div className="top-streamers">
-				<div className="top-streamers__content">{loadingAnimation}</div>
+				<div className="top-streamers__content">{LoadingAnimation}</div>
 			</div>
 		);
 	} else {

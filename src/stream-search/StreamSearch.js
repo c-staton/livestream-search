@@ -6,7 +6,7 @@ import StreamFeed from "../common/StreamFeed";
 import GameFeed from "./GameFeed";
 import gameList from "../common/GameList";
 import "./styles/StreamSearch.css";
-import loadingAnimation from "../common/Loading";
+import LoadingAnimation from "../common/LoadingAnimation";
 
 const StreamSearch = ({ initial = "" }) => {
 	const [streams, setStreams] = useState([]);
@@ -39,7 +39,7 @@ const StreamSearch = ({ initial = "" }) => {
 							defaultValue={initialSearch}
 						/>
 					</div>
-					{loadingAnimation}
+					{LoadingAnimation}
 				</div>
 			</div>
 		);
