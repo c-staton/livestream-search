@@ -1,9 +1,10 @@
-import LSSearch from "./Api";
+import { StreamService, LiveStreamSearch } from "./Api";
 import TopStreamersList from "../top-streamers/TopStreamersList";
 
 test("calling search Twitch", async () => {
-	const justChattingId = "509658";
-	const result = await LSSearch.searchTwitch(justChattingId);
+	const searchTerm = "Just Chatting";
+	const api = new StreamService("twitch");
+	const result = await api.Service.searchLives(searchTerm);
 	expect(result).toBeInstanceOf(Array);
 	expect(result.length).toBeGreaterThan(0);
 	expect(result[0]).toEqual({
@@ -19,15 +20,11 @@ test("calling search Twitch", async () => {
 
 test("calling getYtLiveIds and getYtData", async () => {
 	const searchTerm = "Just Chatting";
-	const idResult = await LSSearch.getYtLiveIds(searchTerm);
-	expect(idResult).toBeInstanceOf(Array);
-	expect(idResult.length).toBeGreaterThan(0);
-	expect(idResult[0]).toEqual(expect.any(String));
-
-	const dataResult = await LSSearch.getYtData(idResult);
-	expect(dataResult).toBeInstanceOf(Array);
-	expect(dataResult.length).toBeGreaterThan(0);
-	expect(dataResult[0]).toEqual({
+	const api = new StreamService("youtube");
+	const result = await api.Service.searchLives(searchTerm);
+	expect(result).toBeInstanceOf(Array);
+	expect(result.length).toBeGreaterThan(0);
+	expect(result[0]).toEqual({
 		channelName: expect.any(String),
 		channelId: expect.any(String),
 		platform: "youtube",
@@ -40,7 +37,7 @@ test("calling getYtLiveIds and getYtData", async () => {
 
 test("calling searchLives", async () => {
 	const searchTerm = "Just Chatting";
-	const result = await LSSearch.searchLives(searchTerm);
+	const result = await LiveStreamSearch.searchLives(searchTerm);
 	expect(result).toBeInstanceOf(Array);
 	expect(result.length).toBeGreaterThan(0);
 	expect(result[0]).toEqual({
@@ -56,7 +53,8 @@ test("calling searchLives", async () => {
 
 test("calling twitchIsLive", async () => {
 	const testStreamer = TopStreamersList[0];
-	const result = await LSSearch.twitchIsLive(testStreamer);
+	const api = new StreamService("twitch");
+	const result = await api.Service.isLive(testStreamer);
 	expect(result).toEqual({
 		channelName: expect.any(String),
 		profileImg: expect.any(String),
@@ -70,7 +68,8 @@ test("calling twitchIsLive", async () => {
 
 test("calling youtubeIsLive", async () => {
 	const testStreamer = TopStreamersList[1];
-	const result = await LSSearch.youtubeisLive(testStreamer);
+	const api = new StreamService("youtube");
+	const result = await api.Service.isLive(testStreamer);
 	expect(result).toEqual({
 		channelName: expect.any(String),
 		profileImg: expect.any(String),
@@ -83,7 +82,8 @@ test("calling youtubeIsLive", async () => {
 });
 
 test("calling isTopLive", async () => {
-	const { highlight, liveStreams, offline } = await LSSearch.isTopLive();
+	const { highlight, liveStreams, offline } =
+		await LiveStreamSearch.isTopLive();
 	expect(highlight).toBeInstanceOf(Array);
 	expect(liveStreams).toBeInstanceOf(Array);
 	expect(offline).toBeInstanceOf(Array);

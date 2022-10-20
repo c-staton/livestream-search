@@ -5,7 +5,7 @@ import HighlightStream from "./HighlightStream";
 import LoadingAnimation from "../common/LoadingAnimation";
 import "./styles/TopStreamer.css";
 import "../common/styles/Loading.css";
-import LSSearch from "../common/Api";
+import { LiveStreamSearch } from "../common/Api";
 
 const TopStreamers = () => {
 	const [liveStreams, setLiveStreams] = useState([]);
@@ -15,7 +15,7 @@ const TopStreamers = () => {
 	useEffect(() => {
 		const verifiedStreamers = async () => {
 			try {
-				const result = await LSSearch.isTopLive();
+				const result = await LiveStreamSearch.isTopLive();
 				if (result.highlight.length > 0) {
 					setHighlightStream(result.highlight);
 				}

@@ -5,24 +5,44 @@ import gameList from "./GameList";
 const TWITCH_STREAM_SEARCH = "https://api.twitch.tv/helix/streams";
 const TWITCH_AUTH = process.env.REACT_APP_TWITCH_AUTH;
 const TWITCH_CLIENT_ID = process.env.REACT_APP_TWITCH_CLIENT_ID;
-const twitchHeaders = {
-	Authorization: `Bearer ${TWITCH_AUTH}`,
-	"Client-Id": TWITCH_CLIENT_ID,
-};
 
 const YOUTUBE_STREAM_SEARCH = "https://www.googleapis.com/youtube/v3/videos";
 const YOUTUBE_IDS_URL = "https://vid.puffyan.us/api/v1";
 const YT_API_KEY = process.env.REACT_APP_YT_API;
-const youtubeHeaders = {
-	Accept: "application/json",
-};
 
-class LSSearch {
-	static async apiCall(params, headers, apiURL) {
+class StreamService {
+	Service = null;
+	constructor(serviceName) {
+		switch (serviceName) {
+			case "youtube":
+				this.Service = YTService;
+				break;
+			case "twitch":
+				this.Service = TwitchService;
+				break;
+			default:
+				throw new Error("Unknown service name");
+		}
+	}
+
+	searchLives(searchTerm) {
+		this.Service.searchLives(searchTerm);
+	}
+
+	isLive(streamer) {
+		this.Service.isLive(streamer);
+	}
+}
+
+class TwitchService {
+	static async apiCall(apiURL, params) {
 		try {
 			const config = {
 				params,
-				headers,
+				headers: {
+					Authorization: `Bearer ${TWITCH_AUTH}`,
+					"Client-Id": TWITCH_CLIENT_ID,
+				},
 			};
 			const result = await axios.get(apiURL, config);
 			return result;
@@ -31,31 +51,16 @@ class LSSearch {
 		}
 	}
 
-	static async searchLives(searchTerm) {
+	static async searchLives(searchTerm, needData = true) {
 		try {
 			const game = gameList.filter((game) => game.label === searchTerm);
-			const ytStreams = await this.searchYoutube(searchTerm);
-			const twitchStreams = await this.searchTwitch(game[0].twitchId);
-			const allStreams = [...ytStreams, ...twitchStreams];
-			const sortedStreams = allStreams.sort(this.viewersSort);
-			return sortedStreams;
-		} catch (err) {
-			console.log(err);
-		}
-	}
-
-	static async searchTwitch(gameId) {
-		try {
+			const gameId = game[0].twitchId;
 			const params = {
 				game_id: gameId,
 				language: "en",
 				first: 20,
 			};
-			const result = await this.apiCall(
-				params,
-				twitchHeaders,
-				TWITCH_STREAM_SEARCH
-			);
+			const result = await this.apiCall(TWITCH_STREAM_SEARCH, params);
 			let streamData = result.data.data.map((stream) => {
 				return {
 					channelName: stream.user_name,
@@ -73,78 +78,13 @@ class LSSearch {
 		}
 	}
 
-	static async searchYoutube(searchTerm) {
-		try {
-			const videoIds = await this.getYtLiveIds(searchTerm);
-			const streamData = await this.getYtData(videoIds);
-			return streamData;
-		} catch (err) {
-			console.log(err);
-		}
-	}
-
-	static async getYtLiveIds(searchTerm) {
-		try {
-			const params = {
-				q: searchTerm,
-				features: "live",
-				type: "video",
-				fields: "videoId",
-			};
-			const result = await this.apiCall(
-				params,
-				youtubeHeaders,
-				`${YOUTUBE_IDS_URL}/search`
-			);
-			const videoIds = result.data.map((obj) => obj.videoId);
-			return videoIds;
-		} catch (err) {
-			console.log(err);
-		}
-	}
-
-	static async getYtData(videoIds) {
-		try {
-			videoIds = videoIds.join(",");
-			const params = {
-				part: "snippet,liveStreamingDetails",
-				key: YT_API_KEY,
-				id: videoIds,
-			};
-			const result = await this.apiCall(
-				params,
-				youtubeHeaders,
-				YOUTUBE_STREAM_SEARCH
-			);
-			const data = result.data.items.map((stream) => {
-				let viewCount = stream.liveStreamingDetails.concurrentViewers;
-				return {
-					channelName: stream.snippet.channelTitle,
-					channelId: stream.snippet.channelId,
-					platform: "youtube",
-					title: stream.snippet.title,
-					streamId: stream.id,
-					thumbnail: stream.snippet.thumbnails.medium.url,
-					viewers: viewCount > 0 ? Number(viewCount) : 0,
-				};
-			});
-			return data;
-		} catch (err) {
-			console.log(err);
-		}
-	}
-
-	static async twitchIsLive(streamer) {
+	static async isLive(streamer) {
 		try {
 			const params = {
 				user_login: streamer.channelId,
 				first: "1",
 			};
-			const result = await this.apiCall(
-				params,
-				twitchHeaders,
-				TWITCH_STREAM_SEARCH
-			);
+			const result = await this.apiCall(TWITCH_STREAM_SEARCH, params);
 			const data = result.data.data;
 			if (data.length < 1) {
 				return streamer;
@@ -163,8 +103,82 @@ class LSSearch {
 			console.log(err);
 		}
 	}
+}
 
-	static async youtubeisLive(streamer) {
+class YTService {
+	static async apiCall(apiURL, params) {
+		try {
+			const config = {
+				params,
+				headers: {
+					Accept: "application/json",
+				},
+			};
+			const result = await axios.get(apiURL, config);
+			return result;
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	static async searchLives(searchTerm, needData = true) {
+		try {
+			const liveIds = await this.getLiveIds(searchTerm);
+			if (needData) {
+				const liveData = await this.getLiveData(liveIds);
+				return liveData;
+			} else {
+				return liveIds;
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	static async getLiveIds(searchTerm) {
+		try {
+			const params = {
+				q: searchTerm,
+				features: "live",
+				type: "video",
+				fields: "videoId",
+			};
+			const result = await this.apiCall(`${YOUTUBE_IDS_URL}/search`, params);
+			const videoIds = result.data.map((obj) => obj.videoId);
+			return videoIds;
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	static async getLiveData(videoIds) {
+		try {
+			videoIds = videoIds.join(",");
+			const params = {
+				part: "snippet,liveStreamingDetails",
+				key: YT_API_KEY,
+				id: videoIds,
+			};
+			const result = await this.apiCall(YOUTUBE_STREAM_SEARCH, params);
+			const data = result.data.items.map((stream) => {
+				let viewCount = stream.liveStreamingDetails.concurrentViewers;
+				return {
+					channelName: stream.snippet.channelTitle,
+					channelId: stream.snippet.channelId,
+					platform: "youtube",
+					title: stream.snippet.title,
+					streamId: stream.id,
+					thumbnail: stream.snippet.thumbnails.medium.url,
+					viewers: viewCount > 0 ? Number(viewCount) : 0,
+				};
+			});
+			return data;
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	static async isLive(streamer) {
 		try {
 			const params = {
 				continuation: "String",
@@ -173,9 +187,8 @@ class LSSearch {
 				fields: "authorId,author,videoThumbnails,title,videoId,lengthSeconds",
 			};
 			const result = await this.apiCall(
-				params,
-				youtubeHeaders,
-				`${YOUTUBE_IDS_URL}/channels/latest/${streamer.channelId}`
+				`${YOUTUBE_IDS_URL}/channels/latest/${streamer.channelId}`,
+				params
 			);
 			const data = result.data;
 			if (data.length < 1) {
@@ -200,16 +213,29 @@ class LSSearch {
 			console.log(err);
 		}
 	}
+}
+
+class LiveStreamSearch {
+	static async searchLives(searchTerm) {
+		try {
+			const twitchApi = new StreamService("twitch");
+			const twitchStreams = await twitchApi.Service.searchLives(searchTerm);
+			const ytApi = new StreamService("youtube");
+			const ytStreams = await ytApi.Service.searchLives(searchTerm);
+			const allStreams = [...ytStreams, ...twitchStreams];
+			const sortedStreams = allStreams.sort(this.viewersSort);
+			return sortedStreams;
+		} catch (err) {
+			console.log(err);
+		}
+	}
 
 	static async isTopLive() {
 		try {
 			const verifiedList = await Promise.all(
 				streamersList.map(async (streamer) => {
-					if (streamer.platform === "youtube") {
-						return await this.youtubeisLive(streamer);
-					} else {
-						return await this.twitchIsLive(streamer);
-					}
+					const api = new StreamService(streamer.platform);
+					return await api.Service.isLive(streamer);
 				})
 			);
 			const live = [];
@@ -268,4 +294,4 @@ class LSSearch {
 	}
 }
 
-export default LSSearch;
+export { StreamService, LiveStreamSearch };

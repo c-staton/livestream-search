@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 import { useLocation } from "react-router";
-import LSSearch from "./Api";
+import { LiveStreamSearch } from "./Api";
 import StreamCard from "./StreamCard";
 import "./styles/StreamFeed.css";
 
@@ -14,13 +14,13 @@ const StreamFeed = ({ streams, sortBy, setSortBy }) => {
 		setSortBy(e.target.value);
 		gaEventTracker(`Stream Sort By: ${e.target.value}`);
 		if (e.target.value === "viewers") {
-			streams.sort(LSSearch.viewersSort);
+			streams.sort(LiveStreamSearch.viewersSort);
 		}
 		if (e.target.value === "alphabetical") {
-			streams.sort(LSSearch.alphabetSort);
+			streams.sort(LiveStreamSearch.alphabetSort);
 		}
 		if (e.target.value === "random") {
-			streams.sort(LSSearch.randomSort);
+			streams.sort(LiveStreamSearch.randomSort);
 		}
 	};
 

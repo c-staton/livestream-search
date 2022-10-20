@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import LSSearch from "../common/Api";
+import { LiveStreamSearch } from "../common/Api";
 import SearchForm from "../common/SearchForm";
 import StreamFeed from "../common/StreamFeed";
 import GameFeed from "./GameFeed";
@@ -30,7 +30,7 @@ const StreamSearch = ({ initial = "" }) => {
 
 	const searchPlatforms = async (searchTerm) => {
 		try {
-			const allStreams = await LSSearch.searchLives(searchTerm);
+			const allStreams = await LiveStreamSearch.searchLives(searchTerm);
 			setStreams(allStreams);
 			setSortBy("viewers");
 		} catch (err) {

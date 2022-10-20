@@ -1,5 +1,5 @@
 import gameList from "./GameList";
-import LSSearch from "./Api";
+import { StreamService } from "./Api";
 
 class Random {
 	static randomNum(min, max) {
@@ -22,13 +22,13 @@ class Random {
 				randCategory = category;
 			}
 
-			let link;
+			let link = null;
+			const api = new StreamService(platform);
+			const res = await api.Service.searchLives(randCategory.label, false);
 			if (platform === "youtube") {
-				const res = await LSSearch.getYtLiveIds(randCategory.label);
 				const streamId = this.getRandElement(res);
 				link = `https://www.youtube.com/watch?v=${streamId}`;
-			} else {
-				const res = await LSSearch.searchTwitch(randCategory.twitchId);
+			} else if (platform === "twitch") {
 				const { channelId } = this.getRandElement(res);
 				link = `https://www.twitch.tv/${channelId}`;
 			}
