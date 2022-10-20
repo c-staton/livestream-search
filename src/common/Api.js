@@ -32,178 +32,210 @@ class LSSearch {
 	}
 
 	static async searchLives(searchTerm) {
-		const game = gameList.filter((game) => game.label === searchTerm);
-		const ytStreams = await this.searchYoutube(searchTerm);
-		const twitchStreams = await this.searchTwitch(game[0].twitchId);
-		const allStreams = [...ytStreams, ...twitchStreams];
-		const sortedStreams = allStreams.sort(this.viewersSort);
-		return sortedStreams;
+		try {
+			const game = gameList.filter((game) => game.label === searchTerm);
+			const ytStreams = await this.searchYoutube(searchTerm);
+			const twitchStreams = await this.searchTwitch(game[0].twitchId);
+			const allStreams = [...ytStreams, ...twitchStreams];
+			const sortedStreams = allStreams.sort(this.viewersSort);
+			return sortedStreams;
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	static async searchTwitch(gameId) {
-		const params = {
-			game_id: gameId,
-			language: "en",
-			first: 20,
-		};
-		const result = await this.apiCall(
-			params,
-			twitchHeaders,
-			TWITCH_STREAM_SEARCH
-		);
-		let streamData = result.data.data.map((stream) => {
-			return {
-				channelName: stream.user_name,
-				channelId: stream.user_login,
-				platform: "twitch",
-				title: stream.title,
-				streamId: stream.id,
-				thumbnail: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${stream.user_login}-320x180.jpg`,
-				viewers: Number(stream.viewer_count),
+		try {
+			const params = {
+				game_id: gameId,
+				language: "en",
+				first: 20,
 			};
-		});
-		return streamData;
+			const result = await this.apiCall(
+				params,
+				twitchHeaders,
+				TWITCH_STREAM_SEARCH
+			);
+			let streamData = result.data.data.map((stream) => {
+				return {
+					channelName: stream.user_name,
+					channelId: stream.user_login,
+					platform: "twitch",
+					title: stream.title,
+					streamId: stream.id,
+					thumbnail: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${stream.user_login}-320x180.jpg`,
+					viewers: Number(stream.viewer_count),
+				};
+			});
+			return streamData;
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	static async searchYoutube(searchTerm) {
-		const videoIds = await this.getYtLiveIds(searchTerm);
-		const streamData = await this.getYtData(videoIds);
-		return streamData;
+		try {
+			const videoIds = await this.getYtLiveIds(searchTerm);
+			const streamData = await this.getYtData(videoIds);
+			return streamData;
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	static async getYtLiveIds(searchTerm) {
-		const params = {
-			q: searchTerm,
-			features: "live",
-			type: "video",
-			fields: "videoId",
-		};
-		const result = await this.apiCall(
-			params,
-			youtubeHeaders,
-			`${YOUTUBE_IDS_URL}/search`
-		);
-		const videoIds = result.data.map((obj) => obj.videoId);
-		return videoIds;
+		try {
+			const params = {
+				q: searchTerm,
+				features: "live",
+				type: "video",
+				fields: "videoId",
+			};
+			const result = await this.apiCall(
+				params,
+				youtubeHeaders,
+				`${YOUTUBE_IDS_URL}/search`
+			);
+			const videoIds = result.data.map((obj) => obj.videoId);
+			return videoIds;
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	static async getYtData(videoIds) {
-		videoIds = videoIds.join(",");
-		const params = {
-			part: "snippet,liveStreamingDetails",
-			key: YT_API_KEY,
-			id: videoIds,
-		};
-		const result = await this.apiCall(
-			params,
-			youtubeHeaders,
-			YOUTUBE_STREAM_SEARCH
-		);
-		const data = result.data.items.map((stream) => {
-			let viewCount = stream.liveStreamingDetails.concurrentViewers;
-			return {
-				channelName: stream.snippet.channelTitle,
-				channelId: stream.snippet.channelId,
-				platform: "youtube",
-				title: stream.snippet.title,
-				streamId: stream.id,
-				thumbnail: stream.snippet.thumbnails.medium.url,
-				viewers: viewCount > 0 ? Number(viewCount) : 0,
+		try {
+			videoIds = videoIds.join(",");
+			const params = {
+				part: "snippet,liveStreamingDetails",
+				key: YT_API_KEY,
+				id: videoIds,
 			};
-		});
-		return data;
+			const result = await this.apiCall(
+				params,
+				youtubeHeaders,
+				YOUTUBE_STREAM_SEARCH
+			);
+			const data = result.data.items.map((stream) => {
+				let viewCount = stream.liveStreamingDetails.concurrentViewers;
+				return {
+					channelName: stream.snippet.channelTitle,
+					channelId: stream.snippet.channelId,
+					platform: "youtube",
+					title: stream.snippet.title,
+					streamId: stream.id,
+					thumbnail: stream.snippet.thumbnails.medium.url,
+					viewers: viewCount > 0 ? Number(viewCount) : 0,
+				};
+			});
+			return data;
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	static async twitchIsLive(streamer) {
-		const params = {
-			user_login: streamer.channelId,
-			first: "1",
-		};
-		const result = await this.apiCall(
-			params,
-			twitchHeaders,
-			TWITCH_STREAM_SEARCH
-		);
-		const data = result.data.data;
-		if (data.length < 1) {
-			return streamer;
+		try {
+			const params = {
+				user_login: streamer.channelId,
+				first: "1",
+			};
+			const result = await this.apiCall(
+				params,
+				twitchHeaders,
+				TWITCH_STREAM_SEARCH
+			);
+			const data = result.data.data;
+			if (data.length < 1) {
+				return streamer;
+			}
+			const latestVid = data[0];
+			const streamData = {
+				channelName: latestVid.user_name,
+				channelId: latestVid.user_login,
+				platform: "twitch",
+				title: latestVid.title,
+				streamId: latestVid.id,
+				thumbnail: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${latestVid.user_login}-320x180.jpg `,
+			};
+			return streamData;
+		} catch (err) {
+			console.log(err);
 		}
-		const latestVid = data[0];
-		const streamData = {
-			channelName: latestVid.user_name,
-			channelId: latestVid.user_login,
-			platform: "twitch",
-			title: latestVid.title,
-			streamId: latestVid.id,
-			thumbnail: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${latestVid.user_login}-320x180.jpg `,
-		};
-		return streamData;
 	}
 
 	static async youtubeisLive(streamer) {
-		const params = {
-			continuation: "String",
-			sort_by: "newest",
-			max_results: 1,
-			fields: "authorId,author,videoThumbnails,title,videoId,lengthSeconds",
-		};
-		const result = await this.apiCall(
-			params,
-			youtubeHeaders,
-			`${YOUTUBE_IDS_URL}/channels/latest/${streamer.channelId}`
-		);
-		const data = result.data;
-		if (data.length < 1) {
-			return streamer;
-		}
-		const latestVid = data[0];
-		const vidLength = latestVid.lengthSeconds; // if api says zero then it must be a livestream
-		if (vidLength === 0) {
-			const data = {
-				channelName: latestVid.author,
-				channelId: latestVid.authorId,
-				platform: "youtube",
-				title: latestVid.title,
-				streamId: latestVid.videoId,
-				thumbnail: latestVid.videoThumbnails[0].url,
+		try {
+			const params = {
+				continuation: "String",
+				sort_by: "newest",
+				max_results: 1,
+				fields: "authorId,author,videoThumbnails,title,videoId,lengthSeconds",
 			};
-			return data;
-		} else {
-			return streamer;
+			const result = await this.apiCall(
+				params,
+				youtubeHeaders,
+				`${YOUTUBE_IDS_URL}/channels/latest/${streamer.channelId}`
+			);
+			const data = result.data;
+			if (data.length < 1) {
+				return streamer;
+			}
+			const latestVid = data[0];
+			const vidLength = latestVid.lengthSeconds; // if api says zero then it must be a livestream
+			if (vidLength === 0) {
+				const data = {
+					channelName: latestVid.author,
+					channelId: latestVid.authorId,
+					platform: "youtube",
+					title: latestVid.title,
+					streamId: latestVid.videoId,
+					thumbnail: latestVid.videoThumbnails[0].url,
+				};
+				return data;
+			} else {
+				return streamer;
+			}
+		} catch (err) {
+			console.log(err);
 		}
 	}
 
 	static async isTopLive() {
-		const verifiedList = await Promise.all(
-			streamersList.map(async (streamer) => {
-				if (streamer.platform === "youtube") {
-					return await this.youtubeisLive(streamer);
+		try {
+			const verifiedList = await Promise.all(
+				streamersList.map(async (streamer) => {
+					if (streamer.platform === "youtube") {
+						return await this.youtubeisLive(streamer);
+					} else {
+						return await this.twitchIsLive(streamer);
+					}
+				})
+			);
+			const live = [];
+			const notLive = [];
+			const highlightStream = [];
+			for (let streamer of verifiedList) {
+				if (streamer.streamId !== "") {
+					live.push(streamer);
 				} else {
-					return await this.twitchIsLive(streamer);
+					notLive.push(streamer);
 				}
-			})
-		);
-		const live = [];
-		const notLive = [];
-		const highlightStream = [];
-		for (let streamer of verifiedList) {
-			if (streamer.streamId !== "") {
-				live.push(streamer);
-			} else {
-				notLive.push(streamer);
 			}
+			const sortedLives = live.sort(this.randomSort);
+			if (sortedLives.length > 0) {
+				const highlight = sortedLives.shift();
+				highlightStream.push(highlight);
+			}
+			const sortedOffline = notLive.sort(this.alphabetSort);
+			return {
+				highlight: highlightStream,
+				liveStreams: sortedLives,
+				offline: sortedOffline,
+			};
+		} catch (err) {
+			console.log(err);
 		}
-		const sortedLives = live.sort(this.randomSort);
-		if (sortedLives.length > 0) {
-			const highlight = sortedLives.shift();
-			highlightStream.push(highlight);
-		}
-		const sortedOffline = notLive.sort(this.alphabetSort);
-		return {
-			highlight: highlightStream,
-			liveStreams: sortedLives,
-			offline: sortedOffline,
-		};
 	}
 
 	static viewersSort(a, b) {

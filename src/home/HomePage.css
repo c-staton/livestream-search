@@ -74,10 +74,10 @@
     }
   }
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 800px) {
 
     .homepage {
-      margin: 0;
+      margin: 10px;
     }
 
     .homepage__middle {
@@ -85,11 +85,17 @@
     }
 
     .homepage__text{
-      font-size: 35px;
+      font-size: 60px;
+      line-height: 50px;
+      display: inline-block;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
     }
   
     .tagline {
       text-align: center;
+      margin-top: 15px;
     }
   }
   

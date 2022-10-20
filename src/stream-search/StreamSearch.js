@@ -7,11 +7,16 @@ import GameFeed from "./GameFeed";
 import gameList from "../common/GameList";
 import "./styles/StreamSearch.css";
 import LoadingAnimation from "../common/LoadingAnimation";
+import { useMediaQuery } from "react-responsive";
 
 const StreamSearch = ({ initial = "" }) => {
 	const [streams, setStreams] = useState([]);
 	const [initialSearch, setInitialSearch] = useState(initial);
 	const [sortBy, setSortBy] = useState("viewers");
+
+	const isMobile = useMediaQuery({
+		query: "(max-width: 1069px)",
+	});
 
 	const location = useLocation();
 	const pathname = location.pathname;
@@ -24,12 +29,16 @@ const StreamSearch = ({ initial = "" }) => {
 	}, [initialSearch]);
 
 	const searchPlatforms = async (searchTerm) => {
-		const allStreams = await LSSearch.searchLives(searchTerm);
-		setStreams(allStreams);
-		setSortBy("viewers");
+		try {
+			const allStreams = await LSSearch.searchLives(searchTerm);
+			setStreams(allStreams);
+			setSortBy("viewers");
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
-	if (streams.length === 0 && pathname !== "/search") {
+	if (streams && streams.length === 0 && pathname !== "/search") {
 		return (
 			<div className="stream-search">
 				<div className="stream-search__content">
@@ -55,6 +64,13 @@ const StreamSearch = ({ initial = "" }) => {
 						/>
 					</div>
 					<GameFeed games={gameList} />
+					{isMobile && (
+						<span className="logo">
+							<a href="/">
+								<span id="livestreams">Livestream</span>Search
+							</a>
+						</span>
+					)}
 				</div>
 			</div>
 		);
@@ -69,6 +85,13 @@ const StreamSearch = ({ initial = "" }) => {
 					/>
 				</div>
 				<StreamFeed streams={streams} sortBy={sortBy} setSortBy={setSortBy} />
+				{isMobile && (
+					<span className="logo">
+						<a href="/">
+							<span id="livestreams">Livestream</span>Search
+						</a>
+					</span>
+				)}
 			</div>
 		</div>
 	);

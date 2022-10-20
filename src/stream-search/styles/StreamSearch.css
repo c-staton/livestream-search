@@ -44,4 +44,15 @@
     .stream-search__block {
       width: 95%;
     }
+
+    .logo {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .logo a {
+        text-decoration: none;
+        color: inherit
+    }
   }

@@ -42,18 +42,20 @@ const StreamFeed = ({ streams, sortBy, setSortBy }) => {
 			{pathname !== "/top-streamers" ? sortBySelect : <br />}
 
 			<div className="stream-feed">
-				{streams.map((vid) => (
-					<StreamCard
-						key={vid.streamId}
-						channelName={vid.channelName}
-						channelId={vid.channelId}
-						platform={vid.platform}
-						title={vid.title}
-						streamId={vid.streamId}
-						thumbnail={vid.thumbnail}
-						viewers={vid.viewers}
-					/>
-				))}
+				{streams &&
+					streams.map((vid) => (
+						<StreamCard
+							key={vid.streamId}
+							channelName={vid.channelName}
+							channelId={vid.channelId}
+							platform={vid.platform}
+							title={vid.title}
+							streamId={vid.streamId}
+							thumbnail={vid.thumbnail}
+							viewers={vid.viewers}
+						/>
+					))}
+				{!streams && <p>Error: no data, try reloading</p>}
 			</div>
 		</>
 	);

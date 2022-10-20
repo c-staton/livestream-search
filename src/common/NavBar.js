@@ -13,8 +13,12 @@ const NavBar = () => {
 
 	useEffect(() => {
 		async function callRandom() {
-			const link = await Random.getStreamLink();
-			setRandomStream(link);
+			try {
+				const link = await Random.getStreamLink();
+				setRandomStream(link);
+			} catch (err) {
+				console.log(err);
+			}
 		}
 		callRandom();
 	}, [clicks]);
