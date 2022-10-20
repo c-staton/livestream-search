@@ -8,10 +8,6 @@
     color: black;
 }
 
-.stream-search__title {
-    text-align: center;
-}
-
 .stream-search__content {
     width: 90%;
     display: flex;
@@ -34,3 +30,18 @@
     justify-content: left;
     align-items: flex-start;
 }
+
+@media screen and (max-width: 800px) {
+
+    .stream-search {
+      margin: 0px;
+    }
+
+    .stream-search__content{
+        width: 100%;
+    }
+  
+    .stream-search__block {
+      width: 95%;
+    }
+  }

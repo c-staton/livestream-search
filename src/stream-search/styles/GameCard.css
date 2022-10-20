@@ -33,3 +33,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+@media screen and (max-width: 800px) {
+    .game-card {
+        width: 99px;
+    }
+
+    .game-card__img {
+        width: 99px;
+        height: 132px;
+        border: 3px solid #f76c82;
+    }
+
+    .game-card__title {
+        font-size: 14px;
+        text-align: center;
+    }
+}

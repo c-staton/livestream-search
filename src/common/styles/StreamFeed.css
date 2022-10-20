@@ -13,7 +13,6 @@
 .sort-by {
     margin-right: auto;
     margin-top: 30px;
-    
 }
 
 .sort-by label {
@@ -25,4 +24,11 @@
 .sort-by select {
     font-weight: bold;
     font-size: 18px;
+}
+
+@media screen and (max-width: 800px) {
+    .sort-by {
+        margin: auto;
+        margin-top: 15px;
+    }
 }

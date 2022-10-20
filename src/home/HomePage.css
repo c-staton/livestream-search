@@ -73,3 +73,25 @@
       transform: skew(10deg, 0);
     }
   }
+
+  @media screen and (max-width: 1200px) {
+
+    .homepage {
+      margin: 0;
+    }
+
+    .homepage__middle {
+      margin-bottom: 100px;
+    }
+
+    .homepage__text{
+      font-size: 35px;
+    }
+  
+    .tagline {
+      text-align: center;
+    }
+  }
+  
+
+  

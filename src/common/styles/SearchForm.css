@@ -50,3 +50,17 @@
 .disabled {
     pointer-events: none;
 }
+
+
+@media screen and (max-width: 800px) {
+    .search-form {
+        width: 90%;
+    }
+    .search-form__input {
+        margin: 15px 0px 10px 0px;
+    }
+
+    .btns-wrapper {
+        text-align: center;
+    }
+}

@@ -1,0 +1,23 @@
+.navbar-mobile {
+    background-color: black;
+    font-size: 20px;
+}
+
+.navbar-mobile__contents {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+    color: white;
+}
+
+.navbar-mobile__contents a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar-mobile__contents a.active {
+    color: #f76c82;
+    font-weight: bold;
+    background-position: 0;
+
+}

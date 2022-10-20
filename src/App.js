@@ -8,11 +8,20 @@ import RequestForm from "./request/RequestForm";
 import gameList from "./common/GameList";
 import "./App.css";
 import ReactGA from "react-ga";
+import { useMediaQuery } from "react-responsive";
+import NavBarMobile from "./common/NavBarMobile";
 
 const TRACKING_ID = "UA-245661443-1"; // OUR_TRACKING_ID
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
+	const isDesktop = useMediaQuery({
+		query: "(min-width: 1070px)",
+	});
+	const isMobile = useMediaQuery({
+		query: "(max-width: 1069px)",
+	});
+
 	useEffect(() => {
 		ReactGA.pageview(window.location.pathname + window.location.search);
 	}, []);
@@ -20,7 +29,8 @@ function App() {
 	return (
 		<div className="App">
 			<BrowserRouter>
-				<NavBar />
+				{isDesktop && <NavBar />}
+				{isMobile && <NavBarMobile />}
 				<Routes>
 					<Route exact path="/" element={<HomePage />} />
 					<Route exact path="/request" element={<RequestForm />} />

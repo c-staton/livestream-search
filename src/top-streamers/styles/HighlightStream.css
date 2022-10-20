@@ -23,3 +23,22 @@
 #live {
     color: #f76c82;
 }
+
+@media screen and (max-width: 1200px) {
+    .highlight__title {
+        font-size: 30px;
+        width: 90%;
+        text-align: center;
+    }
+
+    .highlight__embed {
+        width: 320px;
+    }
+
+    .highlight__embed iframe {
+        width: 320px;
+        height: 180px;
+        border: 3px solid #f76c82;
+    }
+    
+}

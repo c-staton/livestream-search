@@ -133,3 +133,7 @@
     50% { transform: translate(-5px, 2px) rotate(-1deg); }
     100% { transform: translate(1px, 1px) rotate(0deg); }
   }
+
+@media screen and (max-width: 800px) {
+  
+}

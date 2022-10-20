@@ -5,3 +5,10 @@
     flex-wrap: wrap;
     padding: 0px 60px;
 }
+
+@media screen and (max-width: 1200px) {
+    .offline-streamers {
+        padding: 0;
+        gap: 5px;
+    }
+}

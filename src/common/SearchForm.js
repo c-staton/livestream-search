@@ -42,33 +42,33 @@ const SearchForm = ({ setInitial, defaultValue }) => {
 	};
 
 	let styles = {
-		input: (provided, state) => ({
+		input: (provided) => ({
 			...provided,
 			fontWeight: "bold",
 			fontSize: "30px",
 			color: "black",
 			padding: "10px",
 		}),
-		menuList: (provided, state) => ({
+		menuList: (provided) => ({
 			...provided,
 			color: "red",
 		}),
-		indicatorSeparator: (provided, state) => ({
+		indicatorSeparator: (provided) => ({
 			...provided,
 			display: "none",
 		}),
-		dropdownIndicator: (provided, state) => ({
+		dropdownIndicator: (provided) => ({
 			...provided,
 			color: "black",
 		}),
-		placeholder: (provided, state) => ({
+		placeholder: (provided) => ({
 			...provided,
 			fontWeight: "bold",
 			color: "black",
 			fontSize: "30px",
 			padding: "10px",
 		}),
-		control: (provided, state) => ({
+		control: (provided) => ({
 			...provided,
 			borderRadius: "10px",
 			margin: "0px -3.5px",
@@ -82,7 +82,7 @@ const SearchForm = ({ setInitial, defaultValue }) => {
 			backgroundColor: state.data.color,
 			fontSize: "state.selectProps.myFontSize",
 		}),
-		singleValue: (provided, state) => ({
+		singleValue: (provided) => ({
 			...provided,
 			color: "black",
 			fontWeight: "bold",

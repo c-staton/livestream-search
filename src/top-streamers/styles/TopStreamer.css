@@ -47,3 +47,24 @@
     margin: auto;
     border-radius: 2px;
 }
+
+@media screen and (max-width: 1200px) {
+    .highlight {
+        flex-direction: column;
+    }
+
+    .top-streamers__content{
+        margin: 0;
+        padding: 0;
+    }
+
+    .top-streamers__content--header{
+        font-size: 30px;
+    }
+    
+
+    .highlight-section {
+        display: inline;
+        flex-direction: row;
+    }
+}

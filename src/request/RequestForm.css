@@ -76,3 +76,18 @@
     display: flex;
     justify-content: center;
 }
+
+
+@media screen and (max-width: 1200px) {
+    .request__content {
+        margin: 0;
+    }
+
+    .request__content h1, .request__content h4 {
+        text-align: center;
+    }
+
+    .request__form {
+        width: 90%;
+    }
+}
