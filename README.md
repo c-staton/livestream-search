@@ -1,6 +1,6 @@
 # Livestream Search
 
-An application used to search for livestreams from both Twitch and YouTube, built with React, JavaScript, and CSS.
+An application used to search for livestreams from both Twitch and YouTube, built with React, Redux, JavaScript, and CSS.
 
 ## Live link:
 
