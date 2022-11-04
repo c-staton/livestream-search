@@ -1,6 +1,6 @@
 import axios from "axios";
-import streamersList from "../top-streamers/TopStreamersList";
-import gameList from "./GameList";
+import streamersList from "./top-streamers/TopStreamersList";
+import gameList from "./common/GameList";
 
 const TWITCH_STREAM_SEARCH = "https://api.twitch.tv/helix/streams";
 const TWITCH_AUTH = process.env.REACT_APP_TWITCH_AUTH;
@@ -12,17 +12,22 @@ const YT_API_KEY = process.env.REACT_APP_YT_API;
 
 class StreamService {
 	Service = null;
+	_instance = null;
 	constructor(serviceName) {
+		if (!StreamService._instance) {
+			StreamService._instance = this;
+		}
 		switch (serviceName) {
 			case "youtube":
-				this.Service = YTService;
+				StreamService._instance.Service = YTService;
 				break;
 			case "twitch":
-				this.Service = TwitchService;
+				StreamService._instance.Service = TwitchService;
 				break;
 			default:
 				throw new Error("Unknown service name");
 		}
+		return StreamService._instance;
 	}
 
 	searchLives(searchTerm) {
@@ -53,7 +58,7 @@ class TwitchService {
 
 	static async searchLives(searchTerm, needData = true) {
 		try {
-			const game = gameList.filter((game) => game.label === searchTerm);
+			const game = gameList.filter((game) => game.value === searchTerm);
 			const gameId = game[0].twitchId;
 			const params = {
 				game_id: gameId,
@@ -240,7 +245,7 @@ class LiveStreamSearch {
 			);
 			const live = [];
 			const notLive = [];
-			const highlightStream = [];
+			let highlight = {};
 			for (let streamer of verifiedList) {
 				if (streamer.streamId !== "") {
 					live.push(streamer);
@@ -250,12 +255,11 @@ class LiveStreamSearch {
 			}
 			const sortedLives = live.sort(this.randomSort);
 			if (sortedLives.length > 0) {
-				const highlight = sortedLives.shift();
-				highlightStream.push(highlight);
+				highlight = sortedLives.shift();
 			}
 			const sortedOffline = notLive.sort(this.alphabetSort);
 			return {
-				highlight: highlightStream,
+				highlight,
 				liveStreams: sortedLives,
 				offline: sortedOffline,
 			};
@@ -294,4 +298,42 @@ class LiveStreamSearch {
 	}
 }
 
-export { StreamService, LiveStreamSearch };
+class Random {
+	static randomNum(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+	static getRandElement(arr) {
+		const randIdx = this.randomNum(0, arr.length - 1);
+		return arr[randIdx];
+	}
+
+	static async getStreamLink(category = "") {
+		try {
+			const platform = this.randomNum(0, 1) === 1 ? "youtube" : "twitch"; //50:50 odds for youtube or twitch
+
+			let randCategory;
+			if (category === "") {
+				randCategory = gameList[this.randomNum(0, gameList.length - 1)]; //Choose random category from GameList
+			} else {
+				randCategory = category;
+			}
+
+			let link = null;
+			const api = new StreamService(platform);
+			const res = await api.Service.searchLives(randCategory.value, false);
+			if (platform === "youtube") {
+				const streamId = this.getRandElement(res);
+				link = `https://www.youtube.com/watch?v=${streamId}`;
+			} else if (platform === "twitch") {
+				const { channelId } = this.getRandElement(res);
+				link = `https://www.twitch.tv/${channelId}`;
+			}
+			return link;
+		} catch (err) {
+			console.log(err);
+		}
+	}
+}
+
+export { StreamService, LiveStreamSearch, Random };

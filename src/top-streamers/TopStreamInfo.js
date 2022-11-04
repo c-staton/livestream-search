@@ -1,7 +1,6 @@
 import React from "react";
 import useAnalyticsEventTracker from "../common/useAnalyticsEventTracker";
 import "./styles/TopStreamInfo.css";
-import liveIcon from "../icons/live.png";
 
 const TopStreamInfo = ({
 	channelName,
@@ -15,7 +14,6 @@ const TopStreamInfo = ({
 		<div className="topstream-info">
 			<div className="topstream-info__data">
 				<div className="topstream-info__data--creator">
-					<img src={liveIcon} alt="live" width="25px" />
 					<p>
 						<a
 							target="_blank"

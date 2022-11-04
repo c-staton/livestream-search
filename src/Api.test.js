@@ -1,8 +1,20 @@
-import { StreamService, LiveStreamSearch } from "./Api";
-import TopStreamersList from "../top-streamers/TopStreamersList";
+import { StreamService, LiveStreamSearch, Random } from "./Api";
+import TopStreamersList from "./top-streamers/TopStreamersList";
+
+test("calling randomNum", () => {
+	const randNum = Random.randomNum(5, 10);
+	expect(randNum).toBeGreaterThanOrEqual(5);
+	expect(randNum).toBeLessThanOrEqual(10);
+});
+
+test("calling getRandElement", () => {
+	const arr = ["a", "b", "c", "d", "e"];
+	const randEle = Random.getRandElement(arr);
+	expect(arr).toContain(randEle);
+});
 
 test("calling search Twitch", async () => {
-	const searchTerm = "Just Chatting";
+	const searchTerm = "just-chatting";
 	const api = new StreamService("twitch");
 	const result = await api.Service.searchLives(searchTerm);
 	expect(result).toBeInstanceOf(Array);
@@ -19,7 +31,7 @@ test("calling search Twitch", async () => {
 });
 
 test("calling getYtLiveIds and getYtData", async () => {
-	const searchTerm = "Just Chatting";
+	const searchTerm = "just-chatting";
 	const api = new StreamService("youtube");
 	const result = await api.Service.searchLives(searchTerm);
 	expect(result).toBeInstanceOf(Array);
@@ -36,7 +48,7 @@ test("calling getYtLiveIds and getYtData", async () => {
 });
 
 test("calling searchLives", async () => {
-	const searchTerm = "Just Chatting";
+	const searchTerm = "just-chatting";
 	const result = await LiveStreamSearch.searchLives(searchTerm);
 	expect(result).toBeInstanceOf(Array);
 	expect(result.length).toBeGreaterThan(0);
@@ -52,7 +64,7 @@ test("calling searchLives", async () => {
 });
 
 test("calling twitchIsLive", async () => {
-	const testStreamer = TopStreamersList[0];
+	const testStreamer = TopStreamersList[2];
 	const api = new StreamService("twitch");
 	const result = await api.Service.isLive(testStreamer);
 	expect(result).toEqual({
@@ -84,7 +96,7 @@ test("calling youtubeIsLive", async () => {
 test("calling isTopLive", async () => {
 	const { highlight, liveStreams, offline } =
 		await LiveStreamSearch.isTopLive();
-	expect(highlight).toBeInstanceOf(Array);
+	expect(highlight).toBeInstanceOf(Object);
 	expect(liveStreams).toBeInstanceOf(Array);
 	expect(offline).toBeInstanceOf(Array);
 });

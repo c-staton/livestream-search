@@ -1,11 +1,12 @@
 import React from "react";
 import GameCard from "./GameCard";
 import "./styles/GameFeed.css";
+import gameList from "../common/GameList";
 
-const GameFeed = ({ games }) => {
+const GameFeed = () => {
 	return (
 		<div className="game-feed">
-			{games.map((game) => (
+			{gameList.map((game) => (
 				<GameCard
 					key={game.value}
 					name={game.label}

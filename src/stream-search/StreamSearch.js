@@ -1,96 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { LiveStreamSearch } from "../common/Api";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import SearchForm from "../common/SearchForm";
 import StreamFeed from "../common/StreamFeed";
-import GameFeed from "./GameFeed";
-import gameList from "../common/GameList";
 import "./styles/StreamSearch.css";
 import LoadingAnimation from "../common/LoadingAnimation";
 import { useMediaQuery } from "react-responsive";
+import { useDispatch, useSelector } from "react-redux";
+import { searchPlatforms } from "../features/streams/streamsSlice";
 
-const StreamSearch = ({ initial = "" }) => {
-	const [streams, setStreams] = useState([]);
-	const [initialSearch, setInitialSearch] = useState(initial);
-	const [sortBy, setSortBy] = useState("viewers");
+const StreamSearch = () => {
+	const dispatch = useDispatch();
+	const { isLoading } = useSelector((store) => store.streams);
 
 	const isMobile = useMediaQuery({
 		query: "(max-width: 1069px)",
 	});
 
-	const location = useLocation();
-	const pathname = location.pathname;
+	const { game } = useParams();
 
-	//if inital search then on render searchPlatforms
 	useEffect(() => {
-		if (initial !== "") {
-			searchPlatforms(initialSearch);
+		if (game) {
+			dispatch(searchPlatforms(game));
 		}
-	}, [initialSearch]);
+	}, [game]);
 
-	const searchPlatforms = async (searchTerm) => {
-		try {
-			const allStreams = await LiveStreamSearch.searchLives(searchTerm);
-			setStreams(allStreams);
-			setSortBy("viewers");
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	if (streams && streams.length === 0 && pathname !== "/search") {
-		return (
-			<div className="stream-search">
-				<div className="stream-search__content">
-					<div className="stream-search__block">
-						<SearchForm
-							setInitial={setInitialSearch}
-							defaultValue={initialSearch}
-						/>
-					</div>
-					<LoadingAnimation />
-				</div>
-			</div>
-		);
-	}
-	if (pathname === "/search") {
-		return (
-			<div className="stream-search">
-				<div className="stream-search__content">
-					<div className="stream-search__block">
-						<SearchForm
-							setInitial={setInitialSearch}
-							defaultValue={"Select a category..."}
-						/>
-					</div>
-					<GameFeed games={gameList} />
-					{isMobile && (
-						<span className="logo">
-							<a href="/">
-								<span id="livestreams">Livestream</span>Search
-							</a>
-						</span>
-					)}
-				</div>
-			</div>
-		);
-	}
 	return (
 		<div className="stream-search">
 			<div className="stream-search__content">
 				<div className="stream-search__block">
-					<SearchForm
-						setInitial={setInitialSearch}
-						defaultValue={initialSearch}
-					/>
+					<SearchForm />
 				</div>
-				<StreamFeed streams={streams} sortBy={sortBy} setSortBy={setSortBy} />
-				{isMobile && (
-					<span className="logo">
-						<a href="/">
-							<span id="livestreams">Livestream</span>Search
-						</a>
-					</span>
+				{isLoading ? (
+					<LoadingAnimation />
+				) : (
+					<>
+						<StreamFeed />
+						{isMobile && (
+							<span className="logo">
+								<a href="/">
+									<span id="livestreams">Livestream</span>Search
+								</a>
+							</span>
+						)}
+					</>
 				)}
 			</div>
 		</div>

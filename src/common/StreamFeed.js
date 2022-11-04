@@ -1,30 +1,27 @@
 import React, { useEffect } from "react";
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 import { useLocation } from "react-router";
-import { LiveStreamSearch } from "./Api";
 import StreamCard from "./StreamCard";
 import "./styles/StreamFeed.css";
+import { useDispatch, useSelector } from "react-redux";
+import { sortStreams, resetSortBy } from "../features/streams/streamsSlice";
 
-const StreamFeed = ({ streams, sortBy, setSortBy }) => {
+const StreamFeed = () => {
+	const dispatch = useDispatch();
+	const { streams, sortBy, isLoading } = useSelector((store) => store.streams);
+
 	const location = useLocation();
 	const pathname = location.pathname;
 	const gaEventTracker = useAnalyticsEventTracker("Stream Sort");
 
 	const handleChange = (e) => {
-		setSortBy(e.target.value);
+		dispatch(sortStreams(e.target.value));
 		gaEventTracker(`Stream Sort By: ${e.target.value}`);
-		if (e.target.value === "viewers") {
-			streams.sort(LiveStreamSearch.viewersSort);
-		}
-		if (e.target.value === "alphabetical") {
-			streams.sort(LiveStreamSearch.alphabetSort);
-		}
-		if (e.target.value === "random") {
-			streams.sort(LiveStreamSearch.randomSort);
-		}
 	};
 
-	useEffect(() => {}, [sortBy]);
+	useEffect(() => {
+		dispatch(resetSortBy());
+	}, [isLoading]);
 
 	let sortBySelect = (
 		<div className="sort-by">

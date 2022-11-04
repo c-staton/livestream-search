@@ -11,7 +11,7 @@
 .game-card__img {
     width: 198px;
     height: 264px;
-    border: 3px solid #f76c82;
+    border-radius: 1rem;
 }
 
 .shrink img {
@@ -42,7 +42,6 @@
     .game-card__img {
         width: 99px;
         height: 132px;
-        border: 3px solid #f76c82;
     }
 
     .game-card__title {

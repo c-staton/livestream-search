@@ -4,7 +4,8 @@
 }
 
 .thumbnail {
-    border: 3px solid #f76c82;
+    /* border: 3px solid #f76c82; */
+    border-radius: 1rem;
     width: 320px;
     height: 180px;
 }

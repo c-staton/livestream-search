@@ -2,7 +2,6 @@ import React from "react";
 import useAnalyticsEventTracker from "./useAnalyticsEventTracker";
 import approximateNumber from "approximate-number";
 import "./styles/StreamInfo.css";
-import liveIcon from "../icons/live.png";
 import userIcon from "../icons/user.png";
 
 const StreamInfo = ({
@@ -26,13 +25,13 @@ const StreamInfo = ({
 							: `https://www.twitch.tv/${channelId}`
 					}
 					onClick={() => gaEventTracker(`Visit ${channelName} (live)`)}
+					title={title}
 				>
 					{title}
 				</a>
 			</h1>
 			<div className="stream-info__data">
 				<div className="stream-info__data--creator">
-					<img src={liveIcon} alt="live" width="25px" />
 					<p>
 						<a
 							target="_blank"
@@ -43,6 +42,7 @@ const StreamInfo = ({
 									: `https://www.twitch.tv/${channelId}`
 							}
 							onClick={() => gaEventTracker(`Visit ${channelName} (live)`)}
+							title={channelName}
 						>
 							{channelName}
 						</a>
@@ -55,7 +55,9 @@ const StreamInfo = ({
 						width="14px"
 						className="viewer"
 					/>
-					<p>{approximateNumber(viewers)}</p>
+					<p title={`${approximateNumber(viewers)} Concurrent Viewers`}>
+						{approximateNumber(viewers)}
+					</p>
 				</div>
 			</div>
 		</div>

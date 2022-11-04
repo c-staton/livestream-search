@@ -41,12 +41,12 @@
     align-items: center;
     gap: 5px;
     font-weight: bold;
-    color: #f76c82;
     font-size: 16px;
 }
 
 .topstream-info__data--creator a {
-    color: #f76c82;
+    color:#606060;
+    font-weight: 500;
     text-decoration: none;
     white-space: nowrap;
 }

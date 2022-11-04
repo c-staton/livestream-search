@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import StreamFeed from "../common/StreamFeed";
 import OfflineStreamers from "./OfflineStreamers";
 import HighlightStream from "./HighlightStream";
 import LoadingAnimation from "../common/LoadingAnimation";
 import "./styles/TopStreamer.css";
 import "../common/styles/Loading.css";
-import { LiveStreamSearch } from "../common/Api";
+import { useDispatch, useSelector } from "react-redux";
+import { getStreamersLive } from "../features/streams/streamsSlice";
 
 const TopStreamers = () => {
-	const [liveStreams, setLiveStreams] = useState([]);
-	const [highlightStream, setHighlightStream] = useState([]);
-	const [offlineStreamers, setOfflineStreamers] = useState([]);
+	const dispatch = useDispatch();
+
+	const { streams, highlightStream, offlineStreamers, isLoading } = useSelector(
+		(store) => store.streams
+	);
 
 	useEffect(() => {
-		const verifiedStreamers = async () => {
-			try {
-				const result = await LiveStreamSearch.isTopLive();
-				if (result.highlight.length > 0) {
-					setHighlightStream(result.highlight);
-				}
-				if (result.liveStreams.length > 0) {
-					setLiveStreams(result.liveStreams);
-				}
-				if (result.offline.length > 0) {
-					setOfflineStreamers(result.offline);
-				}
-			} catch (err) {
-				console.log(err);
-			}
-		};
-		verifiedStreamers();
+		dispatch(getStreamersLive());
 	}, []);
 
 	let highlightIsLive = (
 		<>
-			<HighlightStream stream={highlightStream[0]} />
-			<StreamFeed streams={liveStreams} />
+			<HighlightStream stream={highlightStream} />
+			<StreamFeed streams={streams} />
 		</>
 	);
 
@@ -48,7 +35,7 @@ const TopStreamers = () => {
 		</p>
 	);
 
-	if (offlineStreamers.length === 0) {
+	if (isLoading) {
 		return (
 			<div className="top-streamers">
 				<div className="top-streamers__content">
@@ -60,7 +47,7 @@ const TopStreamers = () => {
 		return (
 			<div className="top-streamers">
 				<div className="top-streamers__content">
-					{highlightStream.length > 0 ? highlightIsLive : highlightNotLive}
+					{highlightStream.channelName ? highlightIsLive : highlightNotLive}
 					<div className="line"></div>
 					<h1 className="top-streamers__content--header">Offline Streamers</h1>
 					<OfflineStreamers streamers={offlineStreamers} />

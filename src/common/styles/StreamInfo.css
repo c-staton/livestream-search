@@ -6,7 +6,7 @@
 }
 
 .stream-info a {
-    color:black;
+    color:#606060;
     text-decoration: none;
 }
 
@@ -17,11 +17,16 @@
     text-overflow: ellipsis;
 }
 
+.stream-info__title a {
+    color: black
+}
+
 .stream-info__data {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+    color: #606060;
 }
 
 .stream-info__data--creator {

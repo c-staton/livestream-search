@@ -22,7 +22,10 @@ const HighlightStream = ({ stream }) => {
 	return (
 		<div className="highlight">
 			<h1 className="highlight__title">
-				Top Streamers <span id="live">Live</span> Right Now
+				<span>Top Streamers&nbsp;</span>
+				<span>
+					<span id="live">Live</span> Right Now
+				</span>
 			</h1>
 			<div className="highlight__embed">
 				{streamEmbed}
