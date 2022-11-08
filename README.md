@@ -8,7 +8,7 @@ Access the live site at [livestreamsearch.com](https://www.livestreamsearch.com)
 
 ## Public API:
 
-Access the public LivestreamSearch API at [livestreamsearch.xyz](https://www.livestreamsearch.xyz)
+Access the public LivestreamSearch API at [livestreamsearch.xyz](https://www.livestreamsearch.xyz)  
 Read the documentation for the LivestreamSearch API at [docs.livestreamsearch.com](https://docs.livestreamsearch.com)
 
 ## Screenshots
