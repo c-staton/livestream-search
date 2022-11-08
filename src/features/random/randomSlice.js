@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Random } from "../../Api";
+import LiveStreamSearch from "../../Api";
 
 const initialState = {
 	streamLink: "",
@@ -10,7 +10,7 @@ export const getRandomStream = createAsyncThunk(
 	"random/getRandomStream",
 	async () => {
 		try {
-			const res = await Random.getStreamLink();
+			const res = await LiveStreamSearch.randomStream();
 			return res;
 		} catch (err) {
 			console.log(err);
@@ -28,7 +28,7 @@ const randomSlice = createSlice({
 	},
 	extraReducers: {
 		[getRandomStream.fulfilled]: (state, { payload }) => {
-			state.streamLink = payload;
+			state.streamLink = payload.data.link;
 		},
 	},
 });

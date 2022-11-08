@@ -33,7 +33,7 @@ const SearchForm = () => {
 		}),
 		placeholder: (provided) => ({
 			...provided,
-			fontWeight: "bold",
+			fontWeight: "500",
 			color: "black",
 			fontSize: "30px",
 			padding: "10px",

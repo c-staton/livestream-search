@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { LiveStreamSearch } from "../../Api";
+import LiveStreamSearch from "../../Api";
 
 const initialState = {
 	streams: [],
@@ -64,16 +64,18 @@ const streamsSlice = createSlice({
 		},
 		[searchPlatforms.fulfilled]: (state, { payload }) => {
 			state.isLoading = false;
-			state.streams = payload;
+			state.streams = payload.data.streams;
 		},
 		[getStreamersLive.pending]: (state) => {
 			state.isLoading = true;
 		},
 		[getStreamersLive.fulfilled]: (state, { payload }) => {
 			state.isLoading = false;
-			state.streams = payload.liveStreams;
-			state.highlightStream = payload.highlight;
-			state.offlineStreamers = payload.offline;
+			let streams = payload.data.online;
+			let highlight = streams.shift();
+			state.streams = streams;
+			state.highlightStream = highlight;
+			state.offlineStreamers = payload.data.offline;
 		},
 	},
 });
