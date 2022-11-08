@@ -6,6 +6,11 @@ An application used to search for livestreams from both Twitch and YouTube, buil
 
 Access the live site at [livestreamsearch.com](https://www.livestreamsearch.com)
 
+## Public API:
+
+Access the public LivestreamSearch API at [livestreamsearch.xyz](https://www.livestreamsearch.xyz)
+Read the documentation for the LivestreamSearch API at [docs.livestreamsearch.com](https://docs.livestreamsearch.com)
+
 ## Screenshots
 
 <p float="left">
@@ -33,10 +38,4 @@ To run Livestream Search locally follow these steps:
 
 - download or clone the repository
 - run `npm install`
-- follow the [Twitch API docs](https://dev.twitch.tv/docs/api/get-started) to get your Twitch Client ID and OAuth token
-- follow the [YouTube API docs](https://developers.google.com/youtube/v3/getting-started) to get your YouTube API key
-- create .env variables:
-  - `REACT_APP_TWITCH_CLIENT_ID = {your_twitch_client_id}`
-  - `REACT_APP_TWITCH_AUTH = {your_twitch_oauth_token}`
-  - `REACT_APP_YT_API = {your_yt_api_key}`
 - run `npm start`
