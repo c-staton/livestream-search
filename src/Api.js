@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://api.livestreamsearch.com";
+const BASE_URL = "https://www.livestreamsearch.xyz";
 
 class LiveStreamSearch {
 	static async apiCall(apiURL, params) {
