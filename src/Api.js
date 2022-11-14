@@ -18,6 +18,7 @@ class LiveStreamSearch {
 		try {
 			const params = {
 				category: searchTerm,
+				maxResults: 40,
 			};
 			const result = await this.apiCall(`${BASE_URL}/search`, params);
 			return result;
