@@ -14,6 +14,7 @@ class LiveStreamSearch {
 			console.log(err);
 		}
 	}
+
 	static async searchLives(searchTerm) {
 		try {
 			const params = {
